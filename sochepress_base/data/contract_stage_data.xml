@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data noupdate="0">
+        <record id="sochepress_contract_stage_draft" model="sochepress.contract.stage">
+            <field name="name">Draft</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="sochepress_contract_stage_in_progress"
+                model="sochepress.contract.stage">
+            <field name="name">In progress</field>
+            <field name="sequence">20</field>
+        </record>
+        <record id="sochepress_contract_stage_closed" model="sochepress.contract.stage">
+            <field name="name">Closed</field>
+            <field name="sequence">40</field>
+        </record>
+
+        <record id="damaged_colis" model="sochepress.etat.colis">
+            <field name="name">Endommagé</field>
+        </record>
+        <record id="conform_colis" model="sochepress.etat.colis">
+            <field name="name">Conforme</field>
+        </record>
+        <record id="colis_type_colis" model="sochepress.type.colis">
+            <field name="name">Colis</field>
+        </record>
+        <record id="colis_type_petite_palette" model="sochepress.type.colis">
+            <field name="name">Petite palette</field>
+        </record>
+        <record id="colis_type_moyenne_palette" model="sochepress.type.colis">
+            <field name="name">Moyenne palette</field>
+        </record>
+        <record id="colis_type_grande_palette" model="sochepress.type.colis">
+            <field name="name">Grande palette</field>
+        </record>
+    </data>
+
+</odoo>

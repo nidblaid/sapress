@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="seq_sochepress_expedition_declaration" model="ir.sequence">
+            <field name="name">sochepress_expedition_declaration_sequencer</field>
+            <field name="code">sochepress.declaration</field>
+            <field name="prefix">BL%(month)s%(year)s</field>
+            <field name="padding">6</field>
+            <field name="implementation">standard</field>
+        </record>
+    </data>
+</odoo>

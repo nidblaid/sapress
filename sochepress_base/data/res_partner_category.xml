@@ -1,0 +1,15 @@
+<odoo>
+    <data>
+        <record id="contact_tag_1" model="res.partner.category">
+            <field name="name">Compte Gros Compte (B2B)</field>
+        </record>
+
+        <record id="contact_tag_2" model="res.partner.category">
+            <field name="name">Compte e-commerce et Revendeurs (B2C)</field>
+        </record>
+
+        <record id="contact_tag_3" model="res.partner.category">
+            <field name="name">Client public (C2C)</field>
+        </record>
+    </data>
+</odoo>

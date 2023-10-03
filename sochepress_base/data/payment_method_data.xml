@@ -1,0 +1,27 @@
+<odoo>
+    <data>
+        <record id="payment_method_1" model="account.payment.method">
+            <field name="name">Cash</field>
+            <field name="code">csh</field>
+            <field name="payment_type">inbound</field>
+        </record>
+        <record id="payment_method_2" model="account.payment.method">
+            <field name="name">Carte de crédit</field>
+            <field name="code">cdc</field>
+            <field name="payment_type">inbound</field>
+
+        </record>
+        <record id="payment_method_3" model="account.payment.method">
+            <field name="name">Chèque</field>
+            <field name="code">chk</field>
+            <field name="payment_type">inbound</field>
+
+        </record>
+        <record id="payment_method_4" model="account.payment.method">
+            <field name="name">Prépayé</field>
+            <field name="code">prp</field>
+            <field name="payment_type">inbound</field>
+
+        </record>
+    </data>
+</odoo>

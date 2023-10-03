@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="sochepress_standard_layout_inherited_view"
+              inherit_id="web.external_layout_standard">
+        <xpath expr="//img" position="replace">
+            <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"
+                 style="max-height: 80px;" alt="Logo"/>
+        </xpath>
+    </template>
+
+    <template id="sochepress_standard_layout_footer_inherited_view"
+              inherit_id="web.external_layout_standard">
+        <xpath
+            expr="//div[@t-attf-class='footer o_standard_footer o_company_#{company.id}_layout']"
+            position="replace">
+            <div t-attf-class="footer o_standard_footer o_company_#{company.id}_layout">
+                <div class="text-center" style="border-top: 1px solid black;">
+                    <div class="text-center h6 ">
+                        <ul class="list-inline mb4">
+                            <small>
+                                SAPRESS - Société Anonyme au capital de 30.000.000 Dhs -
+                                <li t-if="company.street"
+                                    class="list-inline-item d-inline">Adress :
+                                    <span class="o_force_ltr"
+                                          t-field="company.street"/>
+                                </li>
+                                ,
+                                <li t-if="company.street2"
+                                    class="list-inline-item d-inline">
+                                    <span class="o_force_ltr"
+                                          t-field="company.street2"/>
+                                </li>
+                                ,
+                                <li class="list-inline-item d-inline"
+                                    t-if="company.zip">
+                                    <span class="o_force_ltr" t-field="company.zip"/>
+                                </li>
+                                <li class="list-inline-item d-inline"
+                                    t-if="company.city">
+                                    <span class="o_force_ltr" t-field="company.city"/>
+                                </li>
+                                <li class="list-inline-item d-inline"
+                                    t-if="company.phone">- Tél. :
+                                    <span class="o_force_ltr" t-field="company.phone"/>
+                                </li>
+                                <li class="list-inline-item d-inline"
+                                    t-if="company.email">- Courriel :
+                                    <span class="o_force_ltr" t-field="company.email"/>
+                                </li>
+                                <li class="list-inline-item d-inline"
+                                    t-if="company.website">- Site :
+                                    <span class="o_force_ltr"
+                                          t-field="company.website"/>
+                                </li>
+                                <br/>
+                                <li class="list-inline-item d-inline"
+                                    t-if="company.company_registry">RC :
+                                    <span class="o_force_ltr"
+                                          t-field="company.company_registry"/>
+                                </li>
+                                <li class="list-inline-item d-inline"
+                                    t-if="company.patente">- Patente :
+                                    <span class="o_force_ltr"
+                                          t-field="company.patente"/>
+                                </li>
+                                <li class="list-inline-item d-inline"
+                                    t-if="company.cnss">- CNSS :
+                                    <span class="o_force_ltr"
+                                          t-field="company.cnss"/>
+                                </li>
+                                <li class="list-inline-item d-inline"
+                                    t-if="company.vat">- IF :
+                                    <span class="o_force_ltr"
+                                          t-field="company.vat"/>
+                                </li>
+                                – ICE : 001524604000067
+                                <br/>
+                                Banque Populaire, Agence Centre d'Affaire Al
+                                Moukaouma, anglerue Roma et Mly Driss 1er -RIB n°190 780
+                                21211 2989 772 0006 60
+                            </small>
+                        </ul>
+
+                    </div>
+
+                    <div t-if="report_type == 'pdf'" class="text-muted">
+                        Page:
+                        <span class="page"/>
+                        /
+                        <span class="topage"/>
+                    </div>
+                </div>
+            </div>
+
+        </xpath>
+    </template>
+
+    <template id="sochepress_invoice_report_inherited_view"
+              inherit_id="account.report_invoice_document">
+        <xpath expr="//div[@t-if='o.invoice_origin']" position="attributes">
+            <attribute name="t-if">1==0</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('page')]" position="after">
+            <div style='page-break-after:always'/>
+            <div class="page" t-if="o.see_details">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <h4>Invoice details</h4>
+                    </div>
+                </div>
+                <br/>
+                <div class="row" t-if="not o.invoice_line_ids">
+                    <div class="col-12 text-center">
+                        <em>No details</em>
+                    </div>
+                </div>
+                <br/>
+                <div class="row" t-if="o.invoice_line_ids">
+                    <table class="table table-bordered table-sm ">
+                        <thead class="thead-light">
+                            <tr>
+                                <th class="text-center">Declaration number</th>
+                                <th class="text-center">Demand date</th>
+                                <th class="text-center">Source</th>
+                                <th class="text-center">Destination</th>
+                                <th class="text-center">Colis number</th>
+                                <th class="text-center">Weight</th>
+                                <th class="text-center">Declared value</th>
+                                <th class="text-center">Insurrance rate</th>
+                                <th class="text-center">Price</th>
+                            </tr>
+                        </thead>
+                        <!--                        <t t-set="details"><t t-esc="o.get_details" /></t>-->
+                        <tbody>
+                            <t t-foreach="o.env['sochepress.customer.request'].search([('invoice_ids', 'in', o.id)])"
+                               t-as="request">
+                                <t t-foreach="request.request_line_ids" t-as="line">
+                                    <tr>
+                                        <td class="text-center">
+                                            <span t-field="line.name"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-field="line.demand_date"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-field="line.source_id"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-field="line.destination_id"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-field="line.nbre_colis"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-field="line.weight"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-field="line.declared_value"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-field="line.insurrance_rate"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-field="line.price"/>
+                                            MAD
+                                        </td>
+                                    </tr>
+                                </t>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </xpath>
+        <xpath expr="//div[hasclass('clearfix')]" position="attributes">
+            <attribute name="t-if">1==0</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('clearfix')]" position="after">
+            <div id="total" class="row">
+                <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ml-auto">
+                    <table class="table table-sm" style="page-break-inside: avoid;">
+                        <tr class="border-black o_subtotal" style="">
+                            <td>
+                                <strong>Total HT</strong>
+                            </td>
+                            <td class="text-right">
+                                <span t-field="o.amount_untaxed"/>
+                            </td>
+                        </tr>
+                        <t t-foreach="o.amount_by_group" t-as="amount_by_group">
+                            <tr style="">
+                                <t t-if="len(o.line_ids.filtered(lambda line: line.tax_line_id)) in [0, 1] and o.amount_untaxed == amount_by_group[2]">
+                                    <td>
+                                        <span class="text-nowrap" t-esc="amount_by_group[0]"/>
+                                    </td>
+                                    <td class="text-right o_price_total">
+                                        <span class="text-nowrap" t-esc="amount_by_group[3]"/>
+                                    </td>
+                                </t>
+                                <t t-else="">
+                                    <td>
+                                        <span t-esc="amount_by_group[0]"/>
+                                        <span class="text-nowrap">on
+                                            <t t-esc="amount_by_group[4]"/>
+                                        </span>
+                                    </td>
+                                    <td class="text-right o_price_total">
+                                        <span class="text-nowrap" t-esc="amount_by_group[3]"/>
+                                    </td>
+                                </t>
+                            </tr>
+                        </t>
+                        <tr class="border-black o_total">
+                            <td>
+                                <strong>Total TTC</strong>
+                            </td>
+                            <td class="text-right">
+                                <span class="text-nowrap" t-field="o.amount_total"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>

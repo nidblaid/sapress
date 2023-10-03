@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="fleet_vehicle_view_form" model="ir.ui.view">
+        <field name="name">fleet.vehicle.form</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('oe_title')]" position="inside">
+                <div>
+                    <label for="is_disponible" class="oe_edit_only"/>
+                    <field name="is_disponible"/>
+                </div>
+            </xpath>
+            <xpath expr="//field[@name='residual_value']" position="after">
+                <field name="vehicule_weight" required="1"/>
+                <field name="vehicule_volume" required="1"/>
+            </xpath>
+            <xpath expr="//field[@name='location']" position="after">
+                <field name="agence_id" domain="[('type','in',['agence', 'plateforme'])]"/>
+                <field name="agence_ids" domain="[('type','in',['agence', 'plateforme']), ('id', '!=', agence_id)]"
+                       widget="many2many_tags"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="fleet_vehicle_view_tree" model="ir.ui.view">
+        <field name="name">fleet.vehicle.tree</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="default_order">create_date desc</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="fleet_vehicle_view_tree" model="ir.ui.view">
+        <field name="name">fleet.vehicle.tree</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="default_order">create_date desc</attribute>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record model="ir.actions.act_window" id="drivers_action">
+        <field name="name">Drivers</field>
+        <field name="res_model">res.partner</field>
+        <field name="domain">[('vehicule_nbr', '>', 0)]</field>
+        <field name="view_mode">kanban,tree,form</field>
+
+    </record>
+
+
+</odoo>

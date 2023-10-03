@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.module.category" id="sochepress_category">
+        <field name="name">Sochepress Groups</field>
+        <field name="description">Manage Customer requests</field>
+        <field name="sequence">200</field>
+        <field name="visible" eval="0"/>
+    </record>
+
+    <record model="ir.module.category" id="cr_category">
+        <field name="name">Sochepress Gestion Groups</field>
+        <field name="description">Manage Customer requests</field>
+        <field name="sequence">100</field>
+    </record>
+
+    <record id="edit_colis_form" model="res.groups">
+        <field name="name">Edit colis form</field>
+    </record>
+
+    <record id="customer_request_user" model="res.groups">
+        <field name="name">User</field>
+        <field name="category_id" ref="sochepress_base.cr_category"/>
+    </record>
+    <record model="ir.rule" id="ir_agence_destination">
+        <field name="name">Agence Destination</field>
+        <field name="model_id" ref="model_sochepress_destination"/>
+        <field name="groups" eval="[(6,0,[ref('customer_request_user')])]"/>
+        <field name="domain_force">['|',('id','child_of', [user.agence_id.id] +
+            user.agence_ids.ids),('type','=','plateforme')]
+        </field>
+    </record>
+
+    <record model="ir.rule" id="ir_agence_colis">
+        <field name="name">Agence Colis</field>
+        <field name="model_id" ref="model_sochepress_customer_request_line"/>
+        <field name="groups" eval="[(6,0,[ref('customer_request_user')])]"/>
+        <field name="domain_force">['|',('source_id','child_of', [user.agence_id.id] + user.agence_ids.ids),'|',
+            ('destination_id', 'child_of', [user.agence_id.id] + user.agence_ids.ids),'|',
+            ('current_position', 'child_of', [user.agence_id.id] + user.agence_ids.ids),'|',
+            ('agence_id','in', [user.agence_id.id] + user.agence_ids.ids), ('agence_id.type','=', 'plateforme')]
+        </field>
+    </record>
+    <record model="ir.rule" id="ir_agence_OT">
+        <field name="name">Agence OT</field>
+        <field name="model_id" ref="model_soch_transport_order"/>
+        <field name="groups" eval="[(6,0,[ref('customer_request_user')])]"/>
+        <field name="domain_force">
+            ['|',('traject_ids.destination_id','child_of', [user.agence_id.id] +
+            user.agence_ids.ids),'|',('traject_ids.destination_id.type','=','plateforme'), '|', ('agence_id','in',
+            [user.agence_id.id] + user.agence_ids.ids),('source_id','in',[user.agence_id.id] + user.agence_ids.ids)]
+        </field>
+    </record>
+    <record model="ir.rule" id="ir_source_destination_demande">
+        <field name="name">Source and destination rule</field>
+        <field name="model_id" ref="model_sochepress_customer_request"/>
+        <field name="groups" eval="[(6,0,[ref('customer_request_user')])]"/>
+        <field name="domain_force">
+            ['|',('request_line_ids.source_id','child_of', [user.agence_id.id] +
+            user.agence_ids.ids),'|',('request_line_ids.destination_id','child_of',
+            [user.agence_id.id] + user.agence_ids.ids),'|', ('request_line_ids.agence_id','in',
+            [user.agence_id.id] + user.agence_ids.ids),'|',('return_request_line_ids.source_id','child_of',
+            [user.agence_id.id] +
+            user.agence_ids.ids),'|',('return_request_line_ids.destination_id','child_of', [user.agence_id.id] +
+            user.agence_ids.ids), '|', ('return_request_line_ids.agence_id','in', [user.agence_id.id] +
+            user.agence_ids.ids), ('request_line_ids.current_position','child_of', [user.agence_id.id] +
+            user.agence_ids.ids)]
+        </field>
+    </record>
+    <record model="ir.rule" id="ir_source_tracability">
+        <field name="name">Source tracability rule</field>
+        <field name="model_id" ref="model_sochepress_tracabilite_colis"/>
+        <field name="groups" eval="[(6,0,[ref('customer_request_user')])]"/>
+        <field name="domain_force">['|',('colis_id.source_id','child_of', [user.agence_id.id] +
+            user.agence_ids.ids),'|',('colis_id.destination_id','child_of',
+            [user.agence_id.id] + user.agence_ids.ids),'|', ('colis_id.agence_id','in',
+            [user.agence_id.id] + user.agence_ids.ids), ('colis_id.current_position','child_of', [user.agence_id.id]
+            +
+            user.agence_ids.ids)]
+        </field>
+    </record>
+
+    <record model="ir.rule" id="fleet.fleet_rule_vehicle_visibility_manager">
+        <field name="name">Fleet vehicule user</field>
+        <field name="model_id" ref="fleet.model_fleet_vehicle"/>
+        <field name="groups" eval="[(6,0,[ref('customer_request_user')])]"/>
+        <field name="domain_force">['|', ('agence_id','in',[user.agence_id.id] + user.agence_ids.ids), ('agence_id',
+            '=', False)]
+        </field>
+    </record>
+
+    <record model="ir.rule" id="fleet_rule_vehicle_visibility_manager_second">
+        <field name="name">Fleet vehicule user</field>
+        <field name="model_id" ref="fleet.model_fleet_vehicle"/>
+        <field name="groups" eval="[(6,0,[ref('fleet.fleet_group_manager')])]"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+    </record>
+
+    <record id="customer_request_manager" model="res.groups">
+        <field name="name">Manager</field>
+        <field name="category_id" ref="sochepress_base.cr_category"/>
+        <field name="implied_ids"
+               eval="[(4, ref('sochepress_base.customer_request_user')), (4, ref('edit_colis_form'))]"/>
+    </record>
+    <record id="ir_agence_destination_mgr" model="ir.rule">
+        <field name="model_id" ref="model_sochepress_destination"/>
+        <field name="name">Agence Destination Manager</field>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4,ref('customer_request_manager'))]"/>
+    </record>
+    <record id="ir_agence_colis_mgr" model="ir.rule">
+        <field name="model_id" ref="model_sochepress_customer_request_line"/>
+        <field name="name">Agence Colis Manager</field>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4,ref('customer_request_manager'))]"/>
+    </record>
+    <record id="ir_agence_ot_mgr" model="ir.rule">
+        <field name="model_id" ref="model_soch_transport_order"/>
+        <field name="name">Agence OT Manager</field>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4,ref('customer_request_manager'))]"/>
+    </record>
+    <record model="ir.rule" id="ir_source_destination_demande_mngr">
+        <field name="name">Source and destination rule</field>
+        <field name="model_id" ref="model_sochepress_customer_request"/>
+        <field name="groups" eval="[(6,0,[ref('customer_request_manager')])]"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+    </record>
+
+    <record model="ir.rule" id="fleet_mngr">
+        <field name="name">Fleet vehicule</field>
+        <field name="model_id" ref="fleet.model_fleet_vehicle"/>
+        <field name="groups" eval="[(6,0,[ref('customer_request_manager')])]"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+    </record>
+
+    <record model="ir.rule" id="ir_source_tracability_mngr">
+        <field name="name">Source tracability rule manager</field>
+        <field name="model_id" ref="model_sochepress_tracabilite_colis"/>
+        <field name="groups" eval="[(6,0,[ref('customer_request_manager')])]"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+    </record>
+
+    <record id="customer_request_exploitation_responsible" model="res.groups">
+        <field name="name">Exploitation responsible</field>
+        <field name="implied_ids"
+               eval="[(4, ref('sochepress_base.customer_request_user'))]"/>
+        <field name="category_id" ref="sochepress_base.sochepress_category"/>
+    </record>
+
+    <record id="customer_request_admin_agent" model="res.groups">
+        <field name="name">Administrative agent</field>
+        <field name="implied_ids"
+               eval="[(4, ref('sochepress_base.customer_request_manager'))]"/>
+        <field name="category_id" ref="sochepress_base.sochepress_category"/>
+    </record>
+
+
+    <record id="customer_request_admin_responsible" model="res.groups">
+        <field name="name">Administrative responsible</field>
+        <field name="category_id" ref="sochepress_base.sochepress_category"/>
+    </record>
+
+    <record id="customer_request_functional_admin" model="res.groups">
+        <field name="name">Functional administrator</field>
+        <field name="implied_ids"
+               eval="[(4, ref('fleet.fleet_group_manager'))]"/>
+        <field name="category_id" ref="sochepress_base.sochepress_category"/>
+    </record>
+</odoo>

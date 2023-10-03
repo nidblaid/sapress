@@ -1,0 +1,1006 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="paperformat_customer_request" model="report.paperformat">
+            <field name="name">Customer request report (BE)</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">50</field>
+            <field name="margin_bottom">10</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">50</field>
+            <field name="dpi">90</field>
+        </record>
+        <template id="customer_request_report_view_second">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-foreach="o.get_grouped_colis(o.partners.ids)" t-as="colis">
+                        <t t-set="coliss" t-value="o.get_grouped_colis()[colis]"/>
+                        <t t-set="o" t-value="o.sudo().with_context(lang=lang)"/>
+                        <div class="header">
+                            <div class="row mb8">
+                                <div class="col-3" style="padding-top:5px;">
+                                    <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)"
+                                         style="max-height: 50px;" alt="Logo"/>
+                                </div>
+                                <div class="col-9 text-center">
+                                    <br/>
+                                    <h5>
+                                        <span>
+                                            <strong>Removal order</strong>:
+                                            <span t-field="o.removal_name"/>
+                                        </span>
+                                    </h5>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                                <div class="col-6" name="Expeditor">
+                                    <strong class=" text-center">
+                                        <u>Expeditor</u>
+                                    </strong>
+                                    <br/>
+                                    <p class="m-0" t-esc="colis.name" t-if="colis"/>
+                                    <span class="m-0" t-esc="colis.street" t-if="colis.street"/>
+                                    <br/>
+                                    <span class="m-0" t-esc="colis.destination_id.name" t-if="colis.destination_id"/>
+                                    <br/>
+                                    <p class="m-0" t-esc="colis.phone" t-if="colis.phone"/>
+                                </div>
+                                <div class="col-6" name="Date">
+                                    <strong>Date:</strong>
+                                    <span t-field="o.demand_date"/>
+                                </div>
+                            </div>
+
+                            <t t-set="date_list" t-value="[]"/>
+
+                            <t t-foreach="coliss" t-as="l">
+                                <t t-set="date_list" t-value="date_list+[l.type_colis_id]"/>
+                            </t>
+                        </div>
+                        <div class="page article">
+                            <t t-foreach="set(date_list)" t-as="date_item">
+                                <h5 t-esc="date_item.name"/>
+                                <table style="padding-bottom:5px;" class="table table-sm o_main_table">
+                                    <thead>
+                                        <tr>
+                                            <td class="text-center font-weight-bold">Numéro
+                                                Colis
+                                            </td>
+                                            <!--                                        <td class="text-center font-weight-bold">Type of colis</td>-->
+                                            <td class="text-center font-weight-bold">
+                                                Weight
+                                            </td>
+                                            <!--                                    <td class="text-center font-weight-bold">Nature de marchandise</td>-->
+                                            <td class="text-center font-weight-bold" style="width:25%">
+                                                Modèle de colis (L * l * H)
+                                            </td>
+                                            <td class="text-center font-weight-bold">
+                                                Destination
+                                            </td>
+                                            <!--                                    <td class="text-center font-weight-bold">Declared value</td>-->
+                                            <!--                                    <td class="text-center font-weight-bold">Retour de fonds</td>-->
+                                            <!--                                    <td class="text-center font-weight-bold">Montant</td>-->
+                                            <td class="text-center font-weight-bold">Numéro
+                                                OT
+                                            </td>
+                                            <td class="text-center font-weight-bold">
+                                                Référence externe
+                                            </td>
+                                            <td class="text-center font-weight-bold">
+                                                Barcode
+                                            </td>
+                                        </tr>
+                                    </thead>
+                                    <tboby>
+                                        <t t-set="nbr" t-value="0"/>
+
+                                        <t t-foreach="coliss" t-as="colis">
+                                            <tr t-if="date_item == colis.type_colis_id">
+                                                <t t-set="nbr" t-value="nbr+1"/>
+                                                <td class="text-center">
+                                                    <span t-field="colis.name"/>
+                                                </td>
+                                                <!--                                            <td class="text-center">-->
+                                                <!--                                                <span t-field="colis.type_colis_id"/>-->
+                                                <!--                                            </td>-->
+                                                <td class="text-center">
+                                                    <span t-field="colis.weight"/>
+                                                </td>
+                                                <!--                                        <td class="text-center">-->
+                                                <!--                                            <span t-field="colis.nature_marchandise"/>-->
+                                                <!--                                        </td>-->
+                                                <td class="text-center">
+                                                    <span t-field="colis.product_id.name"/>
+                                                </td>
+                                                <td class="text-center">
+                                                    <span t-field="colis.destination_id" t-if="colis.destination_id"/>
+                                                    <span t-field="colis.custom_destination"
+                                                          t-elif="colis.custom_destination"/>
+                                                </td>
+                                                <!--                                        <td class="text-center">-->
+                                                <!--                                            <span t-field="colis.declared_value"/>-->
+                                                <!--                                        </td>-->
+                                                <!--                                        <td class="text-center">-->
+                                                <!--                                            <span t-field="colis.return_method_id"/>-->
+                                                <!--                                        </td>-->
+                                                <!--                                        <td class="text-center">-->
+                                                <!--                                            <span t-field="colis.return_amount"/>-->
+                                                <!--                                        </td>-->
+                                                <td class="text-center">
+                                                    <span t-field="colis.order_id"/>
+                                                </td>
+                                                <td class="text-center font-weight-bold">
+                                                    <span t-field="colis.ref_ext"/>
+                                                </td>
+                                                <td class="text-center align-middle">
+                                                    <t t-if="colis.barcode">
+                                                        <img
+                                                            t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', colis.barcode, 600, 150)"
+                                                            style="width: 4cm; height:0.8cm" alt="Barcode"/>
+                                                        <span t-esc="colis.barcode" style='font-size:12px'/>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <span class="text-muted">No barcode
+                                                            available
+                                                        </span>
+                                                    </t>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tboby>
+                                </table>
+                                <br/>
+                                <br/>
+                                <div class="clearfix">
+                                    <div id="total" class="row">
+                                        <div
+                                            t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ml-auto">
+                                            <table class="table table-sm" style="page-break-inside: avoid;">
+                                                <tr class="border-black o_subtotal" style="">
+                                                    <td>
+                                                        <strong>Quantité prévue à ramasser</strong>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <span t-esc="nbr"/>
+                                                    </td>
+                                                </tr>
+                                                <tr class="border-black o_subtotal" style="">
+                                                    <td>
+                                                        <strong>Quantité ramassée</strong>
+                                                    </td>
+                                                    <td class="text-right">
+
+                                                    </td>
+                                                </tr>
+                                                <!--                                            <tr class="border-black o_subtotal" style="">-->
+                                                <!--                                                <td>-->
+                                                <!--                                                    <strong>Montant à encaisser</strong>-->
+                                                <!--                                                </td>-->
+                                                <!--                                                <td class="text-right">-->
+                                                <!--                                                    <span-->
+                                                <!--                                                        t-esc="sum([col.return_amount for col in o.request_line_ids.filtered(lambda r: r.type_colis_id==date_item)])"-->
+                                                <!--                                                        t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>-->
+                                                <!--                                                </td>-->
+                                                <!--                                            </tr>-->
+                                                <!--                                            <tr class="border-black o_subtotal" style="">-->
+                                                <!--                                                <td>-->
+                                                <!--                                                    <strong>Montant encaissé</strong>-->
+                                                <!--                                                </td>-->
+                                                <!--                                                <td class="text-right">-->
+                                                <!--                                                </td>-->
+                                                <!--                                            </tr>-->
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <div style="page-break-after:always"
+                                     t-if="not date_item_index==len(list(set(date_list)))-1"/>
+                            </t>
+                            <div class="row" style="padding-bottom:5px;" t-if="colis_index==len(coliss)-1">
+                                <table class="table table-bordered table-sm">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <td class="text-center">Visa Expéditeur</td>
+                                            <td class="text-center">Visa Transporteur</td>
+                                            <!--                                        <td class="text-center">Visa Destinataire</td>-->
+                                        </tr>
+                                    </thead>
+                                    <tboby>
+                                        <tr>
+                                            <td class="text-center">
+                                                <br/>
+                                                <br/>
+                                            </td>
+                                            <td class="text-center">
+                                                <br/>
+                                                <br/>
+                                            </td>
+                                            <!--                                        <td class="text-center">-->
+                                            <!--                                            <br/>-->
+                                            <!--                                            <br/>-->
+                                            <!--                                        </td>-->
+                                        </tr>
+                                    </tboby>
+                                </table>
+                            </div>
+
+                            <!--                        <div class="clearfix">-->
+                            <!--                            <div id="total" class="row">-->
+                            <!--                                <div-->
+                            <!--                                    t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ml-auto">-->
+                            <!--                                    <h4>Résumé de votre bon d'enlèvement</h4>-->
+                            <!--                                    <table class="table table-sm"-->
+                            <!--                                           style="page-break-inside: avoid;">-->
+                            <!--                                        <tr class="border-black o_subtotal" style="">-->
+                            <!--                                            <td>-->
+                            <!--                                                <strong>Quantité à ramasser</strong>-->
+                            <!--                                            </td>-->
+                            <!--                                            <td class="text-right">-->
+                            <!--                                                <span-->
+                            <!--                                                    t-esc="len(o.request_line_ids)"/>-->
+                            <!--                                            </td>-->
+                            <!--                                        </tr>-->
+                            <!--                                        <tr class="border-black o_subtotal" style="">-->
+                            <!--                                            <td>-->
+                            <!--                                                <strong>Quantité ramassée</strong>-->
+                            <!--                                            </td>-->
+                            <!--                                            <td class="text-right">-->
+                            <!--                                                <span-->
+                            <!--                                                    t-esc="len(o.request_line_ids)"/>-->
+                            <!--                                            </td>-->
+                            <!--                                        </tr>-->
+                            <!--                                        <tr class="border-black o_subtotal" style="">-->
+                            <!--                                            <td>-->
+                            <!--                                                <strong>Montant à encaisser</strong>-->
+                            <!--                                            </td>-->
+                            <!--                                            <td class="text-right">-->
+                            <!--                                                <span-->
+                            <!--                                                    t-esc="sum([col.return_amount for col in o.request_line_ids])"-->
+                            <!--                                                    t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>-->
+                            <!--                                            </td>-->
+                            <!--                                        </tr>-->
+                            <!--                                        <tr class="border-black o_subtotal" style="">-->
+                            <!--                                            <td>-->
+                            <!--                                                <strong>Montant encaissé</strong>-->
+                            <!--                                            </td>-->
+                            <!--                                            <td class="text-right">-->
+                            <!--                                                <span-->
+                            <!--                                                    t-esc="sum([col.returned_amount for col in o.request_line_ids])"-->
+                            <!--                                                    t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>-->
+                            <!--                                            </td>-->
+                            <!--                                        </tr>-->
+                            <!--                                    </table>-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
+                            <!--                        </div>-->
+                            <br/>
+                            <div class="footer o_standard_footer">
+                                <t t-set='company' t-value='o.company_id'/>
+                                <div class='row'>
+                                    <div class="col-11 text-center" style="border-top: 1px solid black;">
+                                        <ul class="list-inline mb4">
+                                            <!-- using the list-inline-item class from bootstrap causes weird behaviours in pdf report
+                                                 adding d-inline class fixes the problem-->
+                                            <li t-if="company.name" class="list-inline-item d-inline">
+                                                <span t-field="company.name"/>
+                                            </li>
+                                            <li t-if="company.street" class="list-inline-item d-inline">
+                                                <span t-field="company.street"/>
+                                            </li>
+                                            <li t-if="company.street2" class="list-inline-item d-inline">
+                                                <span t-field="company.street2"/>
+                                            </li>
+                                            <li class="list-inline-item d-inline">
+                                                <span t-field="company.website"/>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class='col-1'>
+                                        <span class="page"/>
+                                        /
+                                        <span class="topage"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <report
+            id="report_customer_request_second"
+            model="sochepress.customer.request"
+            string="Bon d'enlèvement"
+            paperformat="paperformat_customer_request"
+            name="sochepress_base.customer_request_report_view_second"
+            file="sochepress_base.customer_request_report_view_second"
+            print_report_name="(object._get_report_base_filename())"
+            report_type="qweb-pdf"/>
+        <record id="paperformat_customer_request_1" model="report.paperformat">
+            <field name="name">Customer request report (BL)</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">100</field>
+            <field name="margin_bottom">10</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">100</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="paperformat_customer_request_return_1" model="report.paperformat">
+            <field name="name">Customer request report return (BL)</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">80</field>
+            <field name="margin_bottom">10</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">80</field>
+            <field name="dpi">90</field>
+        </record>
+        <template id="customer_request_report_view">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-set="o" t-value="o.sudo().with_context(lang=lang)"/>
+                    <t t-set="documents" t-value="[]"/>
+                    <t t-set="exp_list" t-value="[]"/>
+                    <t t-foreach="o.colis_ids.filtered(lambda x:x.order_id==o.ot_id)" t-as="colis">
+                        <t t-set="exp_list" t-value="exp_list+[colis.expeditor_id]"/>
+                    </t>
+                    <t t-foreach="list(set(exp_list))" t-as="exp_item">
+                        <div class="header" style="padding-bottom:5px;">
+                            <div class="row mb8">
+                                <div class="col-6" style="padding-top:5px;">
+                                    <img t-if="o.request_id.company_id.logo"
+                                         t-att-src="image_data_uri(o.request_id.company_id.logo)"
+                                         style="max-height: 100px;"
+                                         alt="Logo"/>
+                                </div>
+                                <div class="col-6">
+                                    <!--                                    <span t-field="o.company_id.partner_id" t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}' />-->
+                                    <span t-field="o.request_id.company_id.name"/>
+                                    <br/>
+                                    <span t-field="o.request_id.company_id.street"/>
+                                    <span t-field="o.request_id.company_id.street2"/>
+                                    <br/>
+                                    <span t-field="o.request_id.company_id.country_id"/>
+                                    -
+                                    <span t-field="o.request_id.company_id.website"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <h2>
+                                        <span>
+                                            <strong>Delivery slip</strong>:
+                                            <span t-field="o.name"/>
+                                        </span>
+                                    </h2>
+                                </div>
+                            </div>
+                            <br/>
+                            <br/>
+
+
+                            <div class="row">
+                                <div class="col-6" name="Expeditor">
+                                    <strong class=" text-center">
+                                        <u>Expeditor</u>
+                                    </strong>
+                                    <br/>
+                                    <p class="m-0" t-esc="exp_item.name"
+                                       t-if="exp_item"/>
+                                    <span class="m-0" t-esc="exp_item.street"
+                                          t-if="exp_item and exp_item.street"/>
+                                    <br/>
+                                    <span class="m-0" t-esc="exp_item.destination_id.name"
+                                          t-if="exp_item and exp_item.destination_id"/>
+                                    <br/>
+                                    <p class="m-0" t-field="exp_item.phone"
+                                       t-if="exp_item and exp_item.phone"/>
+                                </div>
+
+
+                                <!--                            <div class="col-6" name="Expeditor">-->
+                                <!--                                <strong class=" text-center">-->
+                                <!--                                    <u>Expeditor</u>-->
+                                <!--                                </strong>-->
+                                <!--                                <br/>-->
+                                <!--                                <p class="m-0" t-field="o.colis_ids[0].expeditor_id"-->
+                                <!--                                   t-if="o.colis_ids and o.colis_ids[0].expeditor_id"/>-->
+                                <!--                                <span class="m-0" t-field="o.colis_ids[0].expeditor_id.street"-->
+                                <!--                                      t-if="o.colis_ids and o.colis_ids[0].expeditor_id.street"/>-->
+                                <!--                                <br/>-->
+                                <!--                                <span class="m-0" t-field="o.colis_ids[0].expeditor_id.destination_id"-->
+                                <!--                                      t-if="o.colis_ids and o.colis_ids[0].source_id"/>-->
+                                <!--                                <br/>-->
+                                <!--                                <p class="m-0" t-field="o.colis_ids[0].expeditor_id.phone"-->
+                                <!--                                   t-if="o.colis_ids[0].expeditor_id.phone"/>-->
+                                <!--                            </div>-->
+                                <div class="col-6" name="Destinator">
+                                    <strong class="text-center">
+                                        <u>Destinator</u>
+                                    </strong>
+                                    <br/>
+                                    <p class="m-0" t-field="o.colis_ids[0].destinator_id"
+                                       t-if="o.colis_ids and o.colis_ids[0].destinator_id"/>
+                                    <span class="m-0" t-field="o.colis_ids[0].destinator_id.street"
+                                          t-if="o.colis_ids and o.colis_ids[0].destinator_id.street"/>
+                                    <br/>
+                                    <span class="m-0" t-field="o.colis_ids[0].destination_id"
+                                          t-if="o.colis_ids and o.colis_ids[0].destination_id"/>
+                                    <span class="m-0" t-field="o.colis_ids[0].custom_destination"
+                                          t-elif="o.colis_ids and o.colis_ids[0].custom_destination"/>
+                                    <br/>
+                                    <p class="m-0" t-field="o.colis_ids[0].destinator_id.phone"
+                                       t-if="o.colis_ids and o.colis_ids[0].destinator_id.phone"/>
+                                </div>
+
+                            </div>
+                            <br/>
+                            <div class="row">
+                                <div class="col-4">
+                                    <strong>Date:</strong>
+                                    <span t-field="o.request_id.demand_date"/>
+                                </div>
+                                <div class="col-4">
+                                    <strong>Number of colis:</strong>
+                                    <span
+                                        t-esc="len(o.colis_ids.filtered(lambda x:x.order_id==o.ot_id and x.expeditor_id==exp_item))"/>
+                                </div>
+                                <div class="col-4">
+                                    <strong>Numéro OT:</strong>
+                                    <span t-esc="o.ot_id.name"/>
+                                </div>
+                            </div>
+                            <br/>
+                            <br/>
+                        </div>
+                        <div class="page article">
+                            <div class="row" style="padding-bottom:5px;padding-top:5px;">
+                                <table class="table table-sm o_main_table">
+                                    <thead>
+                                        <tr>
+                                            <td class="text-center font-weight-bold">
+                                                Colis
+                                            </td>
+                                            <td class="text-center font-weight-bold">Type de colis
+                                            </td>
+                                            <td class="text-center font-weight-bold">
+                                                Weight
+                                            </td>
+                                            <td class="text-center font-weight-bold" style="width:18%">Modèle de colis
+                                                (L *
+                                                l * H)
+                                            </td>
+                                            <td class="text-center font-weight-bold">
+                                                Declared value
+                                            </td>
+                                            <td class="text-center font-weight-bold">Retour
+                                                de fonds
+                                            </td>
+                                            <td class="text-center font-weight-bold">
+                                                Montant
+                                            </td>
+                                            <td class="text-center font-weight-bold" style="width:35%">
+                                                Barcode
+                                            </td>
+                                        </tr>
+                                    </thead>
+                                    <tboby
+                                        t-if="len(o.colis_ids.filtered(lambda x:x.order_id==o.ot_id and x.expeditor_id==exp_item))>0">
+                                        <t t-foreach="o.colis_ids" t-as="colis">
+                                            <t t-if="colis.order_id==o.ot_id and colis.expeditor_id==exp_item">
+                                                <tr>
+                                                    <td class="text-center">
+                                                        <span t-field="colis.name"/>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span
+                                                            t-field="colis.type_colis_id"/>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span t-field="colis.weight"/>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span
+                                                            t-field="colis.product_id.name"/>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span
+                                                            t-field="colis.declared_value"/>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span
+                                                            t-field="colis.return_method_id"/>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span
+                                                            t-field="colis.return_amount"/>
+                                                    </td>
+                                                    <td class="text-center align-middle"
+                                                        style="height: 6rem;width:35%">
+                                                        <t t-if="colis.barcode">
+                                                            <img
+                                                                t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', colis.barcode, 600, 150)"
+                                                                style="width:105%;height:4rem"
+                                                                alt="Barcode"/>
+                                                            <span t-esc="colis.barcode"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <span class="text-muted">No
+                                                                barcode available
+                                                            </span>
+                                                        </t>
+                                                    </td>
+                                                </tr>
+                                                <t t-foreach="colis.document_ids" t-as="do">
+                                                    <t t-if="do.return_type == 'physical'">
+                                                        <t t-set="documents" t-value="documents+[do]"/>
+                                                    </t>
+
+                                                </t>
+
+                                            </t>
+                                        </t>
+                                    </tboby>
+                                    <tboby t-else="">
+                                        <tr class="text-center">
+                                            <td colspan="12">
+                                                <em>Aucun colis</em>
+                                            </td>
+                                        </tr>
+                                    </tboby>
+                                </table>
+                            </div>
+                            <br/>
+                            <br/>
+                            <div class="row" style="margin-top:100px;padding-bottom:5px;">
+                                <table class="table table-bordered table-sm">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <td class="text-center">Visa Transporteur</td>
+                                            <td class="text-center">Visa Destinataire</td>
+                                        </tr>
+                                    </thead>
+                                    <tboby>
+                                        <tr>
+                                            <td class="text-center">
+                                                <br/>
+                                                <br/>
+                                            </td>
+                                            <td class="text-center">
+                                                <br/>
+                                                <br/>
+                                            </td>
+                                        </tr>
+                                    </tboby>
+                                </table>
+                            </div>
+
+                            <div class="row" style="page-break-before:always;" t-if="documents">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-12 text-center">
+                                            <h4 class="font-weight-bold">Codes-barres pour les documents associés aux
+                                                colis
+                                            </h4>
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <table class="table table-sm o_main_table">
+                                            <thead>
+                                                <tr>
+                                                    <td class="text-center font-weight-bold">
+                                                        Colis d'origine
+                                                    </td>
+                                                    <td class="text-center font-weight-bold">
+                                                        Référence du document
+                                                    </td>
+                                                    <td class="text-center font-weight-bold" style="width:35%">
+                                                        Barcode
+                                                    </td>
+                                                </tr>
+                                            </thead>
+                                            <tboby>
+                                                <t t-foreach="documents" t-as="dodo">
+                                                    <tr t-if="dodo.return_type=='physical'">
+                                                        <td class="text-center">
+                                                            <span t-field="dodo.colis_id.name"/>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <span
+                                                                t-field="dodo.name"/>
+                                                        </td>
+                                                        <td class="text-center align-middle"
+                                                            style="height: 6rem;width:35%">
+                                                            <t t-if="dodo.barcode">
+                                                                <img
+                                                                    t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', dodo.barcode, 600, 150)"
+                                                                    style="width:105%;height:4rem"
+                                                                    alt="Barcode"/>
+                                                                <span t-esc="dodo.barcode"/>
+                                                            </t>
+                                                            <t t-else="">
+                                                                <span class="text-muted">No
+                                                                    barcode available
+                                                                </span>
+                                                            </t>
+
+                                                        </td>
+                                                    </tr>
+                                                </t>
+                                            </tboby>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="footer o_clean_footer">
+                                <div class="text-center">
+                                    <span class="page"/>
+                                    /
+                                    <span class="topage"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+
+            </t>
+
+        </template>
+        <report
+            id="report_customer_request"
+            model="sochepress.declaration"
+            string="Bordereau de livraison"
+            paperformat="paperformat_customer_request_1"
+            name="sochepress_base.customer_request_report_view"
+            file="sochepress_base.customer_request_report"
+            print_report_name="(object._get_report_base_filename())"
+            report_type="qweb-pdf"/>
+
+
+        <template id="customer_request_report_view_return">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-set="o" t-value="o.sudo().with_context(lang=lang)"/>
+                    <t t-set="documents" t-value="[]"/>
+                    <!--                    <t t-set="exp_list" t-value="[]"/>-->
+                    <!--                    <t t-foreach="o.colis_ids.filtered(lambda x:x.order_id==o.ot_id)" t-as="colis">-->
+                    <!--                        <t t-set="exp_list" t-value="exp_list+[colis.expeditor_id]"/>-->
+                    <!--                    </t>-->
+                    <!--                    <t t-foreach="list(set(exp_list))" t-as="exp_item">-->
+                    <!--                        -->
+                    <!--                    </t>-->
+                    <div class="header" style="padding-bottom:5px;">
+                        <div class="row mb8">
+                            <div class="col-6" style="padding-top:5px;">
+                                <img t-if="o.request_id.company_id.logo"
+                                     t-att-src="image_data_uri(o.request_id.company_id.logo)" style="max-height: 100px;"
+                                     alt="Logo"/>
+                            </div>
+                            <div class="col-6">
+                                <!--                                    <span t-field="o.company_id.partner_id" t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}' />-->
+                                <span t-field="o.request_id.company_id.name"/>
+                                <br/>
+                                <span t-field="o.request_id.company_id.street"/>
+                                <span t-field="o.request_id.company_id.street2"/>
+                                <br/>
+                                <span t-field="o.request_id.company_id.country_id"/>
+                                -
+                                <span t-field="o.request_id.company_id.website"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                <h2>
+                                    <span>
+                                        <strong>Delivery slip</strong>:
+                                        <span t-field="o.name"/>
+                                    </span>
+                                </h2>
+                            </div>
+                        </div>
+                        <br/>
+                        <br/>
+
+
+                        <div class="row">
+                            <div class="col-6" name="Destinator">
+                                <strong class="text-center">
+                                    <u>Destinator</u>
+                                </strong>
+                                <br/>
+                                <p class="m-0" t-field="o.colis_ids[0].destinator_id"
+                                   t-if="o.colis_ids and o.colis_ids[0].destinator_id"/>
+                                <span class="m-0" t-field="o.colis_ids[0].destinator_id.street"
+                                      t-if="o.colis_ids and o.colis_ids[0].destinator_id.street"/>
+                                <br/>
+                                <span class="m-0" t-field="o.colis_ids[0].destination_id"
+                                      t-if="o.colis_ids and o.colis_ids[0].destination_id"/>
+                                <span class="m-0" t-field="o.colis_ids[0].custom_destination"
+                                      t-elif="o.colis_ids and o.colis_ids[0].custom_destination"/>
+                                <br/>
+                                <p class="m-0" t-field="o.colis_ids[0].destinator_id.phone"
+                                   t-if="o.colis_ids and o.colis_ids[0].destinator_id.phone"/>
+                            </div>
+                            <div class="col-6" name="Expeditor">
+                                <!--                                <strong class=" text-center">-->
+                                <!--                                    <u>Expeditor</u>-->
+                                <!--                                </strong>-->
+                                <!--                                <br/>-->
+                                <!--                                <p class="m-0" t-esc="exp_item.name"-->
+                                <!--                                   t-if="exp_item"/>-->
+                                <!--                                <span class="m-0" t-esc="exp_item.street"-->
+                                <!--                                      t-if="exp_item and exp_item.street"/>-->
+                                <!--                                <br/>-->
+                                <!--                                <span class="m-0" t-esc="exp_item.destination_id.name"-->
+                                <!--                                      t-if="exp_item and exp_item.destination_id"/>-->
+                                <!--                                <br/>-->
+                                <!--                                <p class="m-0" t-field="exp_item.phone"-->
+                                <!--                                   t-if="exp_item and exp_item.phone"/>-->
+                            </div>
+
+                            <!--                            <div class="col-6" name="Expeditor">-->
+                            <!--                                <strong class=" text-center">-->
+                            <!--                                    <u>Expeditor</u>-->
+                            <!--                                </strong>-->
+                            <!--                                <br/>-->
+                            <!--                                <p class="m-0" t-field="o.colis_ids[0].expeditor_id"-->
+                            <!--                                   t-if="o.colis_ids and o.colis_ids[0].expeditor_id"/>-->
+                            <!--                                <span class="m-0" t-field="o.colis_ids[0].expeditor_id.street"-->
+                            <!--                                      t-if="o.colis_ids and o.colis_ids[0].expeditor_id.street"/>-->
+                            <!--                                <br/>-->
+                            <!--                                <span class="m-0" t-field="o.colis_ids[0].expeditor_id.destination_id"-->
+                            <!--                                      t-if="o.colis_ids and o.colis_ids[0].source_id"/>-->
+                            <!--                                <br/>-->
+                            <!--                                <p class="m-0" t-field="o.colis_ids[0].expeditor_id.phone"-->
+                            <!--                                   t-if="o.colis_ids[0].expeditor_id.phone"/>-->
+                            <!--                            </div>-->
+
+
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-4">
+                                <strong>Date:</strong>
+                                <span t-field="o.request_id.demand_date"/>
+                            </div>
+                            <div class="col-4">
+                                <strong>Number of colis:</strong>
+                                <span t-esc="len(o.colis_ids.filtered(lambda x:x.order_id==o.ot_id))"/>
+                            </div>
+                            <div class="col-4">
+                                <strong>Numéro OT:</strong>
+                                <span t-esc="o.ot_id.name"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="page article">
+                        <div class="row" style="padding-bottom:1px;padding-top:1px;">
+                            <table class="table table-sm o_main_table">
+                                <thead>
+                                    <tr>
+                                        <td class="text-center font-weight-bold">
+                                            Colis
+                                        </td>
+                                        <td class="text-center font-weight-bold">
+                                            Expéditeur
+                                        </td>
+                                        <td class="text-center font-weight-bold">Type de colis
+                                        </td>
+                                        <td class="text-center font-weight-bold">
+                                            Weight
+                                        </td>
+                                        <td class="text-center font-weight-bold" style="width:18%">Modèle de colis
+                                            (L *
+                                            l * H)
+                                        </td>
+                                        <td class="text-center font-weight-bold">
+                                            Declared value
+                                        </td>
+                                        <td class="text-center font-weight-bold">
+                                            Référence externe
+                                        </td>
+                                        <td class="text-center font-weight-bold">Retour
+                                            de fonds
+                                        </td>
+                                        <td class="text-center font-weight-bold">
+                                            Montant
+                                        </td>
+                                        <td class="text-center font-weight-bold" style="width:35%">
+                                            Barcode
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tboby t-if="len(o.colis_ids.filtered(lambda x:x.order_id==o.ot_id))&gt;0">
+                                    <t t-foreach="o.colis_ids.filtered(lambda x:x.order_id==o.ot_id)" t-as="colis">
+                                        <!--                                        <t t-esc="colis_index" ></t>-->
+                                        <tr>
+                                            <td class="text-center">
+                                                <span t-field="colis.name"/>
+                                            </td>
+                                            <td class="text-center">
+                                                <span t-field="colis.expeditor_id"/>
+                                            </td>
+                                            <td class="text-center">
+                                                <span t-field="colis.type_colis_id"/>
+                                            </td>
+                                            <td class="text-center">
+                                                <span t-field="colis.weight"/>
+                                            </td>
+                                            <td class="text-center">
+                                                <span t-field="colis.product_id.name"/>
+                                            </td>
+                                            <td class="text-center">
+                                                <span t-field="colis.declared_value"/>
+                                            </td>
+                                            <td class="text-center">
+                                                <span t-field="colis.ref_ext"/>
+                                            </td>
+                                            <td class="text-center">
+                                                <span t-field="colis.return_method_id"/>
+                                            </td>
+                                            <td class="text-center">
+                                                <span t-field="colis.return_amount"/>
+                                            </td>
+                                            <td class="text-center align-middle" style="height: 6rem;width:35%">
+                                                <t t-if="colis.barcode">
+                                                    <img
+                                                        t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', colis.barcode, 600, 150)"
+                                                        style="width:105%;height:4rem" alt="Barcode"/>
+                                                    <span t-esc="colis.barcode"/>
+                                                </t>
+                                                <t t-else="">
+                                                    <span class="text-muted">No
+                                                        barcode available
+                                                    </span>
+                                                </t>
+                                            </td>
+                                        </tr>
+                                        <t t-foreach="colis.document_ids" t-as="do">
+                                            <t t-if="do.return_type == 'physical'">
+                                                <t t-set="documents" t-value="documents+[do]"/>
+                                            </t>
+                                        </t>
+                                    </t>
+                                </tboby>
+                                <tboby t-else="">
+                                    <tr class="text-center">
+                                        <td colspan="12">
+                                            <em>Aucun colis</em>
+                                        </td>
+                                    </tr>
+                                </tboby>
+                            </table>
+                        </div>
+                        <br/>
+                        <br/>
+                        <div class="row" style="margin-top:100px;padding-bottom:5px;">
+                            <table class="table table-bordered table-sm">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <td class="text-center">Visa Transporteur</td>
+                                        <td class="text-center">Visa Destinataire</td>
+                                    </tr>
+                                </thead>
+                                <tboby>
+                                    <tr>
+                                        <td class="text-center">
+                                            <br/>
+                                            <br/>
+                                        </td>
+                                        <td class="text-center">
+                                            <br/>
+                                            <br/>
+                                        </td>
+                                    </tr>
+                                </tboby>
+                            </table>
+                        </div>
+
+                        <div class="row" style="page-break-before:always;" t-if="documents">
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-12 text-center">
+                                        <h4 class="font-weight-bold">Codes-barres pour les documents associés aux
+                                            colis
+                                        </h4>
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <table class="table table-sm o_main_table">
+                                        <thead>
+                                            <tr>
+                                                <td class="text-center font-weight-bold">
+                                                    Colis d'origine
+                                                </td>
+                                                <td class="text-center font-weight-bold">
+                                                    Référence du document
+                                                </td>
+                                                <td class="text-center font-weight-bold" style="width:35%">
+                                                    Barcode
+                                                </td>
+                                            </tr>
+                                        </thead>
+                                        <tboby>
+                                            <t t-foreach="documents" t-as="dodo">
+                                                <tr t-if="dodo.return_type=='physical'">
+                                                    <td class="text-center">
+                                                        <span t-field="dodo.colis_id.name"/>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span t-field="dodo.name"/>
+                                                    </td>
+                                                    <td class="text-center align-middle" style="height: 6rem;width:35%">
+                                                        <t t-if="dodo.barcode">
+                                                            <img
+                                                                t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', dodo.barcode, 600, 150)"
+                                                                style="width:105%;height:4rem" alt="Barcode"/>
+                                                            <span t-esc="dodo.barcode"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <span class="text-muted">No
+                                                                barcode available
+                                                            </span>
+                                                        </t>
+
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tboby>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="footer o_clean_footer">
+                            <div class="text-center">
+                                <span class="page"/>
+                                /
+                                <span class="topage"/>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+
+            </t>
+        </template>
+        <report
+            id="report_customer_request_return"
+            model="sochepress.declaration"
+            string="Bordereau de livraison"
+            paperformat="paperformat_customer_request_return_1"
+            name="sochepress_base.customer_request_report_view_return"
+            file="sochepress_base.customer_request_report"
+            print_report_name="(object._get_report_base_filename())"
+            report_type="qweb-pdf"/>
+    </data>
+
+</odoo>

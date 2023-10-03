@@ -1,0 +1,52 @@
+<odoo>
+    <!--tree-->
+    <record id="view_sls_sms_type_tree" model="ir.ui.view">
+        <field name="name">sls.sms.type.tree</field>
+        <field name="model">sls.sms.type</field>
+        <field name="arch" type="xml">
+            <tree default_order="create_date desc">
+                <field name="name"/>
+                <field name="cible"/>
+                <field name="timing"/>
+                <field name="Contenu"/>
+                <field name="tarif"/>
+                <field name="create_date" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+    <!--search-->
+
+    <!--form-->
+    <record id="view_sls_sms_type_form" model="ir.ui.view">
+        <field name="name">sls.sms.type.form</field>
+        <field name="model">sls.sms.type</field>
+        <field name="arch" type="xml">
+            <form string="Payment multi company">
+                <sheet>
+                    <group>
+                        <group colspan="8">
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="cible"/>
+                            <field name="timing"/>
+                        </group>
+                        <group>
+                            <field name="Contenu"/>
+                            <field name="tarif"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!--action-->
+
+    <record id="sls_sms_type_action" model="ir.actions.act_window">
+        <field name="name">Sls sms type</field>
+        <field name="res_model">sls.sms.type</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+</odoo>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="sochepress_code_otp_wizard_form" model="ir.ui.view">
+            <field name="name">sochepress.otp.code.wizard.form</field>
+            <field name="model">sochepress.otp.code.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Code OTP">
+                    <!--                    <group>-->
+                    <!--                        <p>-->
+                    <!--                            <field name="colis_id"/>-->
+                    <!--                        </p>-->
+                    <!--                    </group>-->
+                    <group>
+                        <field name="otp_code"/>
+                        <field name="mobile" required="1" invisible="1"/>
+                    </group>
+                    <footer>
+                        <button string="Verify" type="object" class="btn-primary" name="verify"/>
+                        <button string="Resend code" type="object" class="btn-primary" name="resend_otp"/>
+                        <button string="Cancel" class="btn btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="sochepress_verif_wizard_form" model="ir.ui.view">
+            <field name="name">sochepress.verif.wizard.form</field>
+            <field name="model">sochepress.verif.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Verification of localisation">
+                    <sheet>
+                        <group col="1">
+                            <p class="oe_grey" attrs="{'invisible': [('type', '=', 'destination')]}">
+                                <h4>
+                                    Selectionner ou créer la localisation correspondante aux sources saisies par les
+                                    clients sur
+                                    les colis
+                                </h4>
+                            </p>
+                            <p class="oe_grey" attrs="{'invisible': [('type', '=', 'source')]}">
+                                <h4>
+                                    Selectionner ou créer la localisation correspondante aux destinations saisies par
+                                    les clients sur
+                                    les colis
+                                </h4>
+                            </p>
+
+                            <group>
+                                <field name="destination_id" required="1" domain="[('type', '=', 'client_final')]"
+                                       context="{'default_type': 'client_final'}"/>
+                                <field name="request_id" invisible="1"/>
+                                <field name="type" invisible="1"/>
+                            </group>
+                            <field name="destination_colis_ids" nolabel="1"
+                                   attrs="{'invisible': [('type', '=', 'source')]}"
+                                   readonly="1">
+                                <tree string="Localisations"  >
+                                    <field name="name"/>
+                                    <field name="custom_destination"/>
+                                </tree>
+                            </field>
+                            <field name="source_colis_ids" nolabel="1"
+                                   attrs="{'invisible': [('type', '=', 'destination')]}"
+                                   readonly="1">
+                                <tree string="Localisations"  >
+                                    <field name="name"/>
+                                    <field name="custom_source"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button string="Confirm" type="object" class="btn-primary" name="confirm"/>
+                        <button string="Cancel" class="btn btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

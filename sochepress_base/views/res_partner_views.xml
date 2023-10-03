@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="res_partner_view_form_custom" model="ir.ui.view">
+        <field name="name">res.partner.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vat']" position="before">
+                <!--                <field name="balance" />-->
+                <field name="agence_id" domain="[('type','=','agence')]"/>
+                <field name="destination_id"/>
+                <field name="code_es"/>
+            </xpath>
+            <xpath expr="//field[@name='child_ids']//form//field[@name='comment']"
+                   position="before">
+                <field name="destination_id"/>
+            </xpath>
+            <xpath expr="//field[@name='ice']" position="before">
+                <field name="cin"/>
+            </xpath>
+            <xpath expr="//field[@name='cin']" position="after">
+                <field name="create_date"/>
+            </xpath>
+
+            <xpath expr="//field[@name='ref']" position="after">
+                <!--                <field name="code_portail"/>-->
+                <field name="horaires"/>
+                <field name="patente"/>
+            </xpath>
+            <xpath expr="//field[@name='vat']" position="after">
+                <field name="rc"/>
+            </xpath>
+            <xpath expr="//field[@name='category_id']" position="after">
+                <field name="client_type" attrs="{'invisible': [('parent_id', '!=', False)]}"/>
+                <field name="horaire_wanted_ids" widget="many2many_tags"
+                       attrs="{'invisible': [('type', '!=', 'delivery')]}"/>
+            </xpath>
+            <xpath expr="//field[@name='type']" position="after">
+
+                <field name="auto_accept_demand" attrs="{'invisible': [('parent_id', '!=', False)]}"/>
+
+            </xpath>
+            <xpath expr="//field[@name='patente']" position="after">
+				<field name="validation_livraison" attrs="{'invisible': [('parent_id', '!=', False)]}"/>
+            </xpath>
+            <!--            <xpath expr="//field[@name='patente']" position="after">-->
+            <!--                <field name="agence_id" domain="[('type','=','agence')]"/>-->
+            <!--            </xpath>-->
+        </field>
+    </record>
+    <record id="res_partner_view_tree_custom" model="ir.ui.view">
+        <field name="name">res.partner.tree</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="default_order">create_date desc</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="res_partner_view_tree_custom" model="ir.ui.view">
+        <field name="name">res.partner.tree</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="default_order">create_date desc</attribute>
+            </xpath>
+        </field>
+    </record>
+    <!--    <record id="res_partner_view_res_partner_filter_custom" model="ir.ui.view">-->
+    <!--        <field name="name">res.partner.select</field>-->
+    <!--        <field name="model">res.partner</field>-->
+    <!--        <field name="inherit_id" ref="base.view_res_partner_filter"/>-->
+    <!--        <field name="arch" type="xml">-->
+    <!--            <xpath expr="//group//filter[@name='group_company']" position="before">-->
+    <!--                <filter name="group_code_portal" string="Code Portal" context="{'group_by': 'code_portail'}"/>-->
+    <!--            </xpath>-->
+    <!--        </field>-->
+    <!--    </record>-->
+    <record id="view_crm_partner_geo_form_inherit" model="ir.ui.view">
+        <field name="name">res.partner.geo.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base_geolocalize.view_crm_partner_geo_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='geo_localize']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record model="ir.actions.server" id="action_compute_portal_code">
+        <field name="name">Compute Portal Code</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="binding_model_id" ref="base.model_res_partner"/>
+        <field name="state">code</field>
+        <field name="code">
+            if records:
+            action = records.compute_code_portail()
+        </field>
+    </record>
+    <record model="ir.actions.server" id="action_auto_accept_demand_masse">
+        <field name="name">Auto accept demande</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="state">code</field>
+        <field name="binding_model_id"
+               ref="base.model_res_partner"/>
+        <field name="code">
+            records.auto_accept_demand_masse()
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="sochepress_account_move_view_form" model="ir.ui.view">
+        <field name="name">account.move.form</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="see_customer_request_details"
+                        class="oe_stat_button"
+                        icon="fa-list"
+                        type="object"
+                        attrs="{'invisible': [('invoice_line_ids','=',False)]}"
+                        string="Details">
+                </button>
+            </xpath>
+            <xpath expr="//field[@name='ref']" position="after">
+                <field name="see_details"/>
+            </xpath>
+        </field>
+    </record>
+
+
+</odoo>

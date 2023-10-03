@@ -1,0 +1,1221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="customer_request_search_filter" model="ir.ui.view">
+        <field name="name">sochepress.customer.request.search</field>
+        <field name="model">sochepress.customer.request</field>
+        <field name="arch" type="xml">
+            <search string="Requests">
+                <field name="name"/>
+                <field name="customer_id"/>
+                <field name="contract_id"/>
+                <!--                <field name="expeditor_id"/>-->
+                <!--                <field name="exp_destination_id"/>-->
+                <!--                <field name="destinator_id"/>-->
+                <!--                <field name="dest_destination_id"/>-->
+                <field name="type"/>
+                <filter name="return_request" string="Return request" domain="[('source_request_id', '!=', False)]"/>
+                <group string="Group by">
+                    <filter name="customer" string="Customer"
+                            context="{'group_by':'customer_id'}"/>
+                    <filter name="contract" string="Contracts"
+                            context="{'group_by':'contract_id'}"/>
+                    <filter name="exp_destination" string="Sources"
+                            context="{'group_by':'exp_destination_id'}"/>
+                    <filter name="dest_destination" string="Destination"
+                            context="{'group_by':'dest_destination_id'}"/>
+                    <filter name="expeditor" string="Expeditor"
+                            context="{'group_by':'expeditor_id'}"/>
+                    <filter name="destinator" string="Destinator"
+                            context="{'group_by':'destinator_id'}"/>
+                    <filter name="type" string="Type" context="{'group_by':'type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="customer_request_line_search_filter" model="ir.ui.view">
+        <field name="name">sochepress.customer.request.line.search</field>
+        <field name="model">sochepress.customer.request.line</field>
+        <field name="arch" type="xml">
+            <search string="Colis">
+                <field name="name"/>
+                <field name="barcode"/>
+                <field name="current_request"/>
+                <field name="source_id"/>
+                <field name="expeditor_id"/>
+                <field name="destination_id"/>
+                <field name="destinator_id"/>
+                <field name="ref_ext"/>
+                <field name="customer_id"/>
+                <!--                <field name="agence_id"/>-->
+                <field name="order_id"/>
+                <filter domain="[('step','=','new')]"
+                        string="New"
+                        name="new_colis"/>
+                <filter domain="[('step','=','charged')]"
+                        string="Chargé"
+                        name="charged_colis"/>
+                <filter domain="[('step','=','discharged')]"
+                        string="Déchargé"
+                        name="discharged_colis"/>
+                <filter domain="[('step','=','delivered')]"
+                        string="Livré"
+                        name="delivered_colis"/>
+                <filter domain="[('step','=','refused')]"
+                        string="Refusé"
+                        name="refused_colis"/>
+                <filter domain="[('step','=','reported')]"
+                        string="Reporté"
+                        name="reported_colis"/>
+                <separator/>
+                <filter domain="[('origin_id','!=',False)]"
+                        string="Documents colis"
+                        name="document_colis"/>
+
+                <separator/>
+                <filter domain="[('document_ids','!=',False)]"
+                        string="Colis with documents"
+                        name="colis_with_documents"/>
+                <group string="Group by">
+                    <filter name="source" string="Source"
+                            context="{'group_by':'source_id'}"/>
+                    <filter name="destination" string="Destination"
+                            context="{'group_by':'destination_id'}"/>
+                    <filter name="client" string="Client"
+                            context="{'group_by':'customer_id'}"/>
+                    <filter name="order" string="N° OT"
+                            context="{'group_by':'order_id'}"/>
+                    <filter name="step" string="Étape"
+                            context="{'group_by':'step'}"/>
+                    <filter name="current_request_state" string="État actuel de la demande"
+                            context="{'group_by':'current_request_state'}"/>
+                    <filter name="send_type_return" string="Type d'envoi"
+                            context="{'group_by':'send_type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="colis_kanban">
+        <field name="name">sochepress.customer.request.line.kanban</field>
+        <field name="model">sochepress.customer.request.line</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile">
+                <field name="name"/>
+                <field name="request_state"/>
+                <field name="demand_date"/>
+                <field name="customer_id"/>
+                <field name="date"/>
+                <field name="state"/>
+                <field name="activity_state"/>
+                <field name="current_position" readonly="1"/>
+                <field name="barcode"/>
+                <progressbar field="activity_state"
+                             colors='{"planned": "success", "today": "warning", "overdue": "danger"}'/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                            <div class="o_kanban_record_top mb8">
+                                <div class="o_kanban_record_headings">
+                                    <strong class="o_kanban_record_title">
+                                        <span>
+                                            <t t-esc="record.name.value"/>
+                                        </span>
+                                        <t t-if="record.current_position.value">at</t>
+                                        <span
+                                            t-esc="record.current_position.value"></span>
+                                    </strong>
+                                </div>
+                                <field name="step" widget="label_selection"
+                                       options="{'classes': {'new': 'default', 'none': 'danger', 'charged': 'warning', 'discharged': 'warning', 'delivered': 'success'}}"/>
+                                <button style="padding: 0px 10px;"
+                                        class="btn btn-link fa fa-desktop"
+                                        name="open_colis"
+                                        type="object"/>
+                            </div>
+                            <div class="o_kanban_record_body">
+                                <span t-if="record.barcode.value">Barcode :
+                                    <field name="barcode"/>
+                                </span>
+                                <!--                    <div class="col">-->
+                                <!--                        <span>Weight-->
+                                <!--                            <field name="weight"/>-->
+                                <!--                            Kg-->
+                                <!--                        </span>-->
+                                <!--                    </div>-->
+                                <!--                    <div class="col">-->
+                                <!--                        <span>-->
+                                <!--                            <field name="type_colis_id"/>-->
+                                <!--                        </span>-->
+                                <!--                    </div>-->
+                                <!--                    <div class="col">-->
+                                <!--                        <span>Volume<field name="volume"/>m³-->
+                                <!--                        </span>-->
+                                <!--                    </div>-->
+                            </div>
+                            <div class="o_kanban_record_bottom">
+                                <div class="oe_kanban_bottom_left">
+                                    <t t-esc="record.customer_id.name"/>
+                                    <field name="activity_ids"
+                                           widget="kanban_activity"/>
+                                </div>
+                                <div class="oe_kanban_bottom_right">
+                                    <t t-esc="record.date and record.date.value.split(' ')[0] or False"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    <!--    <record id="customer_request_line_search_filter" model="ir.ui.view">-->
+    <!--        <field name="name">sochepress.customer.request.line.search</field>-->
+    <!--        <field name="model">sochepress.customer.request.line</field>-->
+    <!--        <field name="arch" type="xml">-->
+    <!--            <search string="Colis">-->
+    <!--                <field name="name"/>-->
+    <!--                <field name="source_id"/>-->
+    <!--                <field name="destination_id"/>-->
+    <!--                <field name="type"/>-->
+    <!--                <group string="Group by">-->
+    <!--                    <filter name="state" string="Request state" context="{'group_by':'customer_id'}"/>-->
+    <!--                    <filter name="type" string="Type" context="{'group_by':'type'}"/>-->
+    <!--                </group>-->
+    <!--            </search>-->
+    <!--        </field>-->
+    <!--    </record>-->
+    <record id="customer_request_form_view" model="ir.ui.view">
+        <field name="name">sochepress.customer.request.form</field>
+        <field name="model">sochepress.customer.request</field>
+        <field name="arch" type="xml">
+            <form string="Requests">
+                <header>
+                    <!--                    <button name="test_action" type="object"-->
+                    <!--                            string="Test"/>-->
+                    <button name="draft_action" type="object"
+                            string="Re draft"
+                            states="canceled"/>
+                    <button name="waiting_action" type="object"
+                            string="Send request"
+                            class="oe_highlight"
+                            states="draft"/>
+                    <button name="verified_action" type="object"
+                            string="Verify"
+                            class="oe_highlight"
+                            states="waiting"/>
+                    <button name="accepted_action" type="object"
+                            string="Accept"
+                            class="oe_highlight"
+                            states="verified"/>
+                    <button name="closed_action" type="object"
+                            string="Close"
+                            class="oe_highlight"
+                            states="accepted"/>
+                    <button name="create_copy" type="object"
+                            string="Return"
+                            class="oe_highlight"
+                            attrs="{'invisible': ['|',('is_return', '!=', False),('state', 'not in', ['accepted', 'closed'])]}"
+                    />
+                    <button name="generate_codes" type="object"
+                            string="Return"
+                            invisible="1"
+                            class="oe_highlight"
+                    />
+                    <!--                     <button name="generate_expedition" type="object"-->
+                    <!--                            string="TEST"-->
+                    <!--                            class="oe_highlight"-->
+                    <!--                            />-->
+                    <button name="generate_expedition" groups="sochepress_base.customer_request_manager" type="object"
+                            string="Re-Générer les expéditions" class="oe_highlight"/>
+                    <button name="refresh_prices" type="object"
+                            string="Refresh Prices"
+                            class="oe_highlight"
+                    />
+                    <!--<button name="action_create_invoices" type="object"-->
+                    <!--string="Create Invoice"-->
+                    <!--states="accepted"-->
+                    <!--attrs="{'invisible': ['|',('invoiced', '=', True),('state', '!=', 'accepted')]}"/>-->
+                    <button name="%(sochepress_base.sochepress_motif_abandon_wizard_action)d" type="action"
+                            string="Cancel" confirm="Êtes vous sûr de vouloir annuler ?"
+                            states="verified,accepted,closed,waiting"/>
+                    <!--                                                groups="__export__.res_groups_119_590b953d,__export__.res_groups_121_ccd23284,sochepress_base.customer_request_manager"-->
+                    <button name="generate_colis_barcodes" type="object"
+                            states="verified,accepted,waiting"
+                            string="Generate colis barcodes"/>
+                    <button name="print_colis_barcodes" type="object" states="verified,accepted,waiting"
+                            string="Print colis barcodes"/>
+                    <button name="print_be" type="object" states="verified,accepted,waiting"
+                            string="Imprimer le BE"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,waiting,verified,accepted,closed"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" icon="fa-book"
+                                name="action_contract_invoice" type="object">
+                            <field name="invoice_count" widget="statinfo"
+                                   string="Invoices"/>
+                        </button>
+                        <button class="oe_stat_button" icon="fa-undo"
+                                name="action_return"
+                                attrs="{'invisible': ['|',('is_return', '!=', False),('state', 'not in', ['accepted', 'closed'])]}"
+                                type="object">
+                            <field name="return_count" widget="statinfo"
+                                   string="Returns"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="active" invisible="1"/>
+                            <field name="customer_id"
+                                   attrs="{'readonly':[('state', 'not in', ['draft', 'waiting'])]}"/>
+                            <field name="type" required="1"
+                                   attrs="{'readonly':[('state', 'not in', ['draft', 'waiting'])]}"/>
+                            <field name="send_type" readonly="0"/>
+                            <field name="vehicule_id"
+                                   attrs="{'invisible': [('type','not in',['transport', 'course'])], 'required': [('type','in',['transport', 'course'])], 'readonly':[('state', 'not in', ['draft', 'waiting'])]}"/>
+                            <label for="vehicule_weight"
+                                   attrs="{'invisible': [('type','not in',['transport', 'course'])], 'readonly':[('state', 'not in', ['draft', 'waiting'])]}"/>
+                            <div class="o_row" name="vehicule_weight"
+                                 attrs="{'invisible': [('type','not in',['transport', 'course'])], 'readonly':[('state', 'not in', ['draft', 'waiting'])]}">
+                                <field name="vehicule_weight"
+                                />
+                                <span>
+                                    Kg
+                                </span>
+                            </div>
+                            <label for="vehicule_volume"
+                                   attrs="{'invisible': [('type','not in',['transport', 'course'])], 'readonly':[('state', 'not in', ['draft', 'waiting'])]}"/>
+                            <div class="o_row" name="vehicule_volume"
+                                 attrs="{'invisible': [('type','not in',['transport', 'course'])], 'readonly':[('state', 'not in', ['draft', 'waiting'])]}">
+                                <field name="vehicule_volume"
+                                />
+                                <span>
+                                    m³
+                                </span>
+                            </div>
+                        </group>
+                        <group>
+                            <!--                            <field name="test" />-->
+                            <field name="demand_date"
+                                   attrs="{'readonly':[('state', 'not in', ['draft', 'waiting'])]}"
+                                   required="1"/>
+                            <field name="source_request_id" invisible="1"/>
+                            <field name="is_return" invisible="1"/>
+                            <field name="validator_id"
+                                   attrs="{'invisible': [('validation_date','=',False)]}"/>
+                            <field name="validation_date"
+                                   attrs="{'invisible': [('validation_date','=',False)]}"/>
+                            <field name="treatment_delay"
+                                   attrs="{'invisible': [('validation_date','=',False)]}"/>
+                        </group>
+                    </group>
+                    <!--                    <group>-->
+                    <!--                        <group>-->
+                    <!--                            <field name="expeditor_id"-->
+                    <!--                                   attrs="{'readonly':[('state', 'not in', ['draft', 'waiting'])]}"/>-->
+                    <field name="show_ref_bl_ref_doc" invisible="1"/>
+                    <!--                            <label for="" name="address_name">-->
+                    <!--                                <b>Address</b>-->
+                    <!--                            </label>-->
+                    <!--                            <div class="o_address_format">-->
+                    <!--                                <field name="e_street" placeholder="Street..." class="o_address_street"-->
+                    <!--                                       attrs="{'readonly':[('state', 'not in', ['draft', 'waiting'])]}"/>-->
+                    <!--                                <field name="e_street2" placeholder="Street 2..." class="o_address_street"-->
+                    <!--                                       attrs="{'readonly':[('state', 'not in', ['draft', 'waiting'])]}"/>-->
+                    <!--                                <field name="exp_destination_id" placeholder="Source" class="o_address_city"-->
+                    <!--                                       options="{'no_open':True,'no_create':True}" force_save="1" required="1"-->
+                    <!--                                       attrs="{'readonly':[('state', 'not in', ['draft', 'waiting'])]}"/>-->
+                    <!--                                <field name="e_country_id" placeholder="Country" class="o_address_state"-->
+                    <!--                                       attrs="{'readonly':[('state', 'not in', ['draft', 'waiting'])]}"/>-->
+                    <!--                            </div>-->
+                    <!--                        </group>-->
+                    <!--                        <group>-->
+                    <!--                            <field name="destinator_id"-->
+                    <!--                                   attrs="{'readonly':[('state', 'not in', ['draft', 'waiting'])]}"/>-->
+                    <!--                            <label for="" name="address_name">-->
+                    <!--                                <b>Address</b>-->
+                    <!--                            </label>-->
+                    <!--                            <div class="o_address_format">-->
+                    <!--                                <field name="d_street" placeholder="Street..." class="o_address_street"-->
+                    <!--                                       attrs="{'readonly':[('state', 'not in', ['draft', 'waiting'])]}"/>-->
+                    <!--                                <field name="d_street2" placeholder="Street 2..." class="o_address_street"-->
+                    <!--                                       attrs="{'readonly':[('state', 'not in', ['draft', 'waiting'])]}"/>-->
+                    <!--                                <field name="dest_destination_id" placeholder="Destination" class="o_address_city"-->
+                    <!--                                       options="{'no_open':True,'no_create':True}" force_save="1" required="1"-->
+                    <!--                                       attrs="{'readonly':[('state', 'not in', ['draft', 'waiting'])]}"/>-->
+                    <!--                                <field name="d_country_id" placeholder="Country" class="o_address_state"-->
+                    <!--                                       attrs="{'readonly':[('state', 'not in', ['draft', 'waiting'])]}"/>-->
+                    <!--                            </div>-->
+                    <!--                        </group>-->
+                    <!--                    </group>-->
+                    <group>
+                        <field name="customer_lost_reason_id"
+                               attrs="{'invisible': [('customer_lost_reason_id','=',False)], 'readonly':[('state', 'not in', ['draft', 'waiting'])]}"/>
+                    </group>
+                    <notebook>
+                        <page name="request_lines" string="Requests lines"
+                              attrs="{'invisible': [('source_request_id', '!=', False)]}">
+                            <field name="localisation_ids" invisible="1"/>
+                            <field name="request_line_ids"
+                                   context="{'default_customer_id': customer_id, 'default_type': type}"
+                                   attrs="{'readonly':[('state', 'not in', ['draft', 'waiting'])]}">
+                                <!--                                <form>-->
+                                <!--                                    <field name="childs_ids" invisible="1"/>-->
+                                <!--                                    <field name="x" invisible="1"/>-->
+                                <!--                                    <field name="type" invisible="1"/>-->
+                                <!--                                    <group>-->
+                                <!--                                        <group>-->
+                                <!--                                            <field name="expeditor_id"-->
+                                <!--                                                   domain="[('parent_id', '=', parent.customer_id)]"/>-->
+                                <!--                                            <field name="source_id" required="1"-->
+                                <!--                                                   domain="[('id', 'in', parent.localisation_ids)]"/>-->
+                                <!--                                            <field name="type_colis_id" required="1"/>-->
+                                <!--                                        </group>-->
+                                <!--                                        <group>-->
+                                <!--                                            <field name="destinator_id"-->
+                                <!--                                                   domain="[('parent_id', '=', parent.customer_id)]"/>-->
+                                <!--                                            <field name="destination_id" required="1"-->
+                                <!--                                                   domain="[('id', 'in', parent.localisation_ids)]"/>-->
+                                <!--                                            <label for="weight"/>-->
+                                <!--                                            <div class="o_row" name="weight">-->
+                                <!--                                                <field name="weight" required="1"/>-->
+                                <!--                                                <span>-->
+                                <!--                                                    Kg-->
+                                <!--                                                </span>-->
+                                <!--                                            </div>-->
+                                <!--                                            <label for="volume"/>-->
+                                <!--                                            <div class="o_row" name="volume">-->
+                                <!--                                                <field name="volume" required="1"/>-->
+                                <!--                                                <span>-->
+                                <!--                                                    m³-->
+                                <!--                                                </span>-->
+                                <!--                                            </div>-->
+                                <!--                                        </group>-->
+                                <!--                                    </group>-->
+                                <!--                                    <group>-->
+                                <!--                                        <group>-->
+                                <!--                                            <field name="return_method_id"/>-->
+                                <!--                                            <field name="return_bl"-->
+                                <!--                                                   string="Fact. Retour doc"-->
+                                <!--                                                   attrs="{'invisible': [('parent.show_ref_bl_ref_doc', '!=', True)]}"/>-->
+                                <!--                                            <field name="state_colis_id"/>-->
+                                <!--                                            <field name="nature_marchandise"/>-->
+                                <!--                                        </group>-->
+                                <!--                                        <group>-->
+                                <!--                                            <field name="return_amount"/>-->
+                                <!--                                            <field name="reference_bl"-->
+                                <!--                                                   attrs="{'invisible': [('parent.show_ref_bl_ref_doc', '!=', True)]}"/>-->
+                                <!--                                            <field name="declared_value"/>-->
+                                <!--                                            <label for="price"/>-->
+                                <!--                                            <div class="o_row" name="price">-->
+                                <!--                                                <field name="price"-->
+                                <!--                                                       attrs="{'readonly': [('type', '=', 'normal')]}"/>-->
+                                <!--                                                <button name="compute_price"-->
+                                <!--                                                        type="object"-->
+                                <!--                                                        class="fa fa-refresh"/>-->
+                                <!--                                            </div>-->
+                                <!--                                        </group>-->
+                                <!--                                    </group>-->
+                                <!--                                </form>-->
+                                <tree string="Requests lines" editable="bottom"
+                                      decoration-info="not_colis_conform==True">
+                                    <field name="childs_ids" invisible="1"/>
+                                    <field name="not_colis_conform" invisible="1"/>
+                                    <field name="x" invisible="1"/>
+                                    <field name="type" invisible="1"/>
+                                    <field name="ref_ext"/>
+                                    <field name="type_colis_id" required="1"/>
+                                    <field name="expeditor_id" domain="[('parent_id', '=', parent.customer_id)]"
+                                           required="1" context="{'default_parent_id': parent.customer_id}"/>
+                                    <field name="custom_source"/>
+                                    <field name="source_id" domain="[('type', '=', 'client_final')]" required="1"/>
+                                    <field name="destinator_id" domain="[('parent_id', '=', parent.customer_id)]"
+                                           required="1" context="{'default_parent_id': parent.customer_id}"/>
+                                    <field name="custom_destination"/>
+                                    <field name="destination_id" domain="[('type', '=', 'client_final')]" required="1"/>
+                                    <field name="product_id"/>
+                                    <field name="declared_weight"/>
+                                    <field name="weight"/>
+                                    <field name="volume" optional="show"/>
+                                    <field name="nature_marchandise" optional="hide"/>
+                                    <field name="declared_value" optional="show"/>
+                                    <field name="return_method_id" optional="show"
+                                           options="{'no_create': True, 'no_edit': True}"/>
+                                    <field name="null_amount" invisible="1"/>
+                                    <field name="return_amount" optional="show"
+                                           attrs="{'readonly':[('null_amount', '=', True)]}"/>
+                                    <field name="return_bl" optional="hide"/>
+                                    <field name="reference_doc" invisible="1"/>
+                                    <field name="id" invisible="1"/>
+                                    <field name="document_ids" optional="hide" widget="many2many_tags"
+                                           domain="[('colis_id','=',id),('colis_id','!=',False)]"
+                                           context="{'form_view_ref' : 'sochepress_base.form_document'}"/>
+                                    <field name="reference_bl" optional="hide" invisible="1"/>
+                                    <field name="price"
+                                           attrs="{'readonly': [('type', '=', 'normal')]}"/>
+                                    <field name="notes"/>
+                                    <!--                                    <button name="compute_price" type="object" class="fa fa-refresh"/>-->
+                                </tree>
+                            </field>
+                            <group class="oe_right">
+                                <group class="oe_subtotal_footer">
+                                    <field name="nbre_colis"/>
+                                    <field name="total_colis_weight"/>
+                                    <field name="total_colis_volume"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page name="return_infos" string="Return"
+                              attrs="{'invisible': [('source_request_id', '=', False)]}">
+                            <field name="return_request_line_ids"
+                                   context="{'default_customer_id': customer_id, 'default_type': type}"
+                                   attrs="{'readonly':[('state', 'not in', ['draft', 'waiting'])]}">
+                                <!--                                <form>-->
+                                <!--                                    <field name="childs_ids" invisible="1"/>-->
+                                <!--                                    <field name="x" invisible="1"/>-->
+                                <!--                                    <field name="type" invisible="1"/>-->
+                                <!--                                    <group>-->
+                                <!--                                        <group>-->
+                                <!--                                            <field name="expeditor_id"-->
+                                <!--                                                   domain="[('parent_id', '=', parent.customer_id)]"/>-->
+                                <!--                                            <field name="source_id" required="1"-->
+                                <!--                                                   domain="[('id', 'in', parent.localisation_ids)]"/>-->
+                                <!--                                            <field name="type_colis_id" required="1"/>-->
+                                <!--                                        </group>-->
+                                <!--                                        <group>-->
+                                <!--                                            <field name="destinator_id"-->
+                                <!--                                                   domain="[('parent_id', '=', parent.customer_id)]"/>-->
+                                <!--                                            <field name="destination_id" required="1"-->
+                                <!--                                                   domain="[('id', 'in', parent.localisation_ids)]"/>-->
+                                <!--                                            <label for="weight"/>-->
+                                <!--                                            <div class="o_row" name="weight">-->
+                                <!--                                                <field name="weight" required="1"/>-->
+                                <!--                                                <span>-->
+                                <!--                                                    Kg-->
+                                <!--                                                </span>-->
+                                <!--                                            </div>-->
+                                <!--                                            <label for="volume"/>-->
+                                <!--                                            <div class="o_row" name="volume">-->
+                                <!--                                                <field name="volume" required="1"/>-->
+                                <!--                                                <span>-->
+                                <!--                                                    m³-->
+                                <!--                                                </span>-->
+                                <!--                                            </div>-->
+                                <!--                                        </group>-->
+                                <!--                                    </group>-->
+                                <!--                                    <group>-->
+                                <!--                                        <group>-->
+                                <!--                                            <field name="return_method_id"/>-->
+                                <!--                                            <field name="return_bl"-->
+                                <!--                                                   string="Fact. Retour doc"-->
+                                <!--                                                   attrs="{'invisible': [('parent.show_ref_bl_ref_doc', '!=', True)]}"/>-->
+                                <!--                                            <field name="state_colis_id"/>-->
+                                <!--                                            <field name="nature_marchandise"/>-->
+                                <!--                                        </group>-->
+                                <!--                                        <group>-->
+                                <!--                                            <field name="return_amount"/>-->
+                                <!--                                            <field name="reference_bl"-->
+                                <!--                                                   attrs="{'invisible': [('parent.show_ref_bl_ref_doc', '!=', True)]}"/>-->
+                                <!--                                            <field name="declared_value"/>-->
+                                <!--                                            <label for="price"/>-->
+                                <!--                                            <div class="o_row" name="price">-->
+                                <!--                                                <field name="price"-->
+                                <!--                                                       attrs="{'readonly': [('type', '=', 'normal')]}"/>-->
+                                <!--                                                <button name="compute_price"-->
+                                <!--                                                        type="object"-->
+                                <!--                                                        class="fa fa-refresh"/>-->
+                                <!--                                            </div>-->
+                                <!--                                        </group>-->
+                                <!--                                    </group>-->
+                                <!--                                </form>-->
+                                <tree string="Requests lines" create="0" decoration-info="not_colis_conform==True">
+                                    <field name="childs_ids" invisible="1"/>
+                                    <field name="not_colis_conform" invisible="1"/>
+                                    <field name="x" invisible="1"/>
+                                    <field name="type" invisible="1"/>
+                                    <field name="create_date" invisible="1"/>
+                                    <field name="ref_ext"/>
+                                    <field name="type_colis_id" required="1"/>
+                                    <field name="expeditor_id" domain="[('parent_id', '=', parent.customer_id)]"/>
+                                    <field name="custom_source"/>
+                                    <field name="source_id" domain="[('type', '=', 'client_final')]" required="1"/>
+                                    <field name="destinator_id" domain="[('parent_id', '=', parent.customer_id)]"/>
+                                    <field name="custom_destination"/>
+                                    <field name="destination_id" domain="[('type', '=', 'client_final')]" required="1"/>
+                                    <field name="product_id"/>
+                                    <field name="weight"/>
+                                    <field name="volume" optional="show"/>
+                                    <field name="nature_marchandise" optional="hide"/>
+                                    <field name="declared_value" optional="show"/>
+                                    <field name="return_method_id" optional="show"
+                                           options="{'no_create': True, 'no_edit': True}"/>
+                                    <field name="null_amount" invisible="1"/>
+                                    <field name="return_amount" optional="show"
+                                           attrs="{'readonly':[('null_amount', '=', True)]}"/>
+                                    <field name="return_bl" optional="hide"/>
+                                    <field name="reference_doc" invisible="1"/>
+                                    <field name="id" invisible="1"/>
+                                    <field name="document_ids" optional="hide" widget="many2many_tags"
+                                           domain="[('colis_id','=',id),('colis_id','!=',False)]"
+                                           context="{'form_view_ref' : 'sochepress_base.form_document'}"/>
+                                    <field name="reference_bl" optional="hide" invisible="1"/>
+                                    <field name="price"
+                                           attrs="{'readonly': [('type', '=', 'normal')]}"/>
+                                    <button name="compute_price" type="object" class="fa fa-refresh"/>
+                                </tree>
+                            </field>
+                            <group>
+                                <group>
+                                    <field name="source_request_id" readonly="1"/>
+                                    <field name="return_of_fund"/>
+                                    <field name="sum_in_number"
+                                           attrs="{'invisible': [('return_of_fund', '=', False)], 'required' :[('return_of_fund', '!=', False)]}"/>
+                                </group>
+                                <group>
+                                    <field name="return_doc_invoice"/>
+                                    <field name="invoice_ref"
+                                           attrs="{'invisible': [('return_doc_invoice', '=', False)], 'required' :[('return_doc_invoice', '!=', False)]}"/>
+                                    <field name="return_doc_bl"/>
+                                    <field name="bl_ref"
+                                           attrs="{'invisible': [('return_doc_bl', '=', False)], 'required' :[('return_doc_bl', '!=', False)]}"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page name="request_infos" string="Invoicing">
+                            <group>
+                                <group>
+                                    <field name="contract_id" force_save="1"
+                                           readonly="1"/>
+                                    <field name="invoiced" readonly="1"/>
+                                    <field name="etat_facturation" readonly="1"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page name="barcodes" string="Codes-barres">
+                            <group>
+                                <group>
+                                    <field name="report_type" required="1"/>
+                                </group>
+                            </group>
+                        </page>
+                        <!--                                                <page name="declarations" string="Declarations">-->
+                        <!--                                                    <group>-->
+                        <!--                                                        <field name="declaration_ids">-->
+                        <!--                                                        </field>-->
+                        <!--                                                    </group>-->
+                        <!--                                                </page>-->
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="customer_request_tree_view_tt" model="ir.ui.view">
+        <field name="name">sochepress.customer.request.tree</field>
+        <field name="model">sochepress.customer.request</field>
+        <field name="arch" type="xml">
+            <tree decoration-info="not_conform_request!=False" decoration-danger="source_request_id!=False"
+                  default_order="create_date desc">
+                <field name="source_request_id" invisible="1"/>
+                <field name="not_conform_request" invisible="1"/>
+                <field name="create_date" invisible="1"/>
+                <field name="name"/>
+                <field name="customer_id"/>
+                <field name="active" invisible="1"/>
+                <!--                <field name="expeditor_id"/>-->
+                <!--                <field name="exp_destination_id"/>-->
+                <!--                <field name="destinator_id"/>-->
+                <!--                <field name="dest_destination_id"/>-->
+                <field name="type"/>
+                <field name="send_type" readonly="0"/>
+                <field name="demand_date"/>
+                <field name="source_ids" widget="many2many_tags"/>
+                <field name="destination_ids" widget="many2many_tags"/>
+                <field name="contract_id"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+    <record id="customer_request_line_form_view" model="ir.ui.view">
+        <field name="name">sochepress.customer.request.line.form</field>
+        <field name="model">sochepress.customer.request.line</field>
+        <field name="arch" type="xml">
+            <form create="false">
+                <header>
+                    <!--<field name="state" widget="statusbar"/>-->
+                    <button name="resend_otp" type="object" class="oe_highlight"
+                            string="Resend otp code"/>
+                    <!--                    <button name="compute_destinations" type="object" class="oe_highlight"-->
+                    <!--                            string="Compute destination"/>-->
+                    <!--                    <button name="refuse"  type="object" class="oe_highlight"-->
+                    <!--                            string="REFUSE TEST"/> reset_to_new-->
+                    <!--                    <button name="set_delivery_dates" type="object"-->
+                    <!--                            class="oe_highlight" string="DATES"/>-->
+                    <button name="generate_barcodes" type="object"
+                            string="Generate barcodes"
+                            class="oe_highlight"/>
+                    <button name="set_to_return" type="object"
+                            string="Return"
+                            attrs="{'invisible':[('return_request_id', '=', False)]}"
+                            class="oe_highlight"/>
+                    <button name="reset_to_new" type="object"
+                            string="Reset to new"
+                            attrs="{'invisible': ['|', ('canceled', '=', True), ('step', '!=', 'not_pickup')]}"
+                            class="oe_highlight"/>
+                    <button name="canceled_button" type="object"
+                            string="Cancel"
+                            confirm="Êtes vous sûr de vouloir annuler ?"
+                            attrs="{'invisible': ['|',('step', '=', 'delivered'),('canceled', '=', True)]}"
+                            class="oe_highlight"/>
+                    <button name="reset_cancel_colis" type="object"
+                            string="Réinitialiser l'annulation"
+                            attrs="{'invisible': [('canceled', '=', False)]}"
+                            class="oe_highlight"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button string="Tracking"
+                                type="object"
+                                name="action_view_tracking"
+                                class="oe_stat_button"
+                                icon="fa-arrows-v"
+                        />
+                    </div>
+                    <widget name="web_ribbon" bg_color="bg-danger" title="Canceled"
+                            attrs="{'invisible': [('canceled', '!=', True)]}"
+                    />
+                    <widget name="web_ribbon" bg_color="bg-warning" title="Document"
+                            attrs="{'invisible': [('origin_id', '=', False)]}"
+                    />
+                    <div>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1" force_save="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="active" invisible="1"/>
+                            <field name="canceled" invisible="1"/>
+                            <field name="origin_id" invisible="1"/>
+                            <field name="reference_bl" readonly="1" string="Document reference"
+                                   attrs="{'invisible': [('reference_bl','=',False)]}"/>
+                            <field name="origin_id" attrs="{'invisible': [('origin_id','=',False)]}" readonly="1"/>
+                            <field name="request_id" string="Demande originale"/>
+                            <field name="order_id" string="N° OT"/>
+                            <field name="return_request_id" attrs="{'invisible':[('return_request_id', '=', False)]}"
+                                   string="Demande de retour"/>
+                            <!--                            <field name="order_id"/>-->
+                            <!--                                                        <field name="operation_done"/>-->
+                            <!--                            <field name="charged"/>-->
+                            <!--                            <field name="nb_charged"/>-->
+                            <!--                            <field name="discharged"/>-->
+                            <field name="send_type" readonly="0"/>
+                            <field name="current_request_state"/>
+                            <field name="type_colis_id" required="1"/>
+                            <field name="delivery_state"/>
+                            <field name="step"/>
+                            <field name="colis_received"/>
+                            <!--                            <field name="delivery_state"/>-->
+                            <field name="price" readonly="1"/>
+                            <field name="expeditor_id"/>
+                            <field name="source_id"/>
+                            <field name="return_method_id" options="{'no_create': True, 'no_edit': True}"/>
+                            <field name="null_amount" invisible="1"/>
+                            <field name="return_amount" optional="show"
+                                   attrs="{'readonly':[('null_amount', '=', True)]}"/>
+                            <field name="r_return_fund_id" string="Retours de fonds inital"
+                                   attrs="{'invisible': [('send_type', '!=', 'return_on_requests')]}"/>
+                            <field name="r_return_amount" string="Montant à retourner initial"
+                                   attrs="{'invisible': [('send_type', '!=', 'return_on_requests')]}"/>
+                            <field name="return_state"/>
+                            <field name="delivery_delay_reason_id" options="{'no_create': True, 'no_edit': True}"/>
+                            <field name="notes"/>
+                            <field name="current_position" readonly="1"/>
+                            <field name="reference_doc" invisible="1"/>
+                            <!--                            <field name="document_ids" widget="many2many_tags"/>-->
+                            <field name="invoiced" readonly="0"/>
+                        </group>
+                        <group>
+                            <field name="barcode"/>
+                            <field name="ref_ext"/>
+                            <field name="state_colis_id"/>
+                            <field name="nature_marchandise"/>
+                            <field name="destinator_id"/>
+                            <field name="destination_id"/>
+                            <field name="product_id"/>
+                            <label for="weight"/>
+                            <div class="o_row" name="weight">
+                                <field name="weight" required="1"/>
+                                <span>
+                                    Kg
+                                </span>
+                            </div>
+                            <label for="volume"/>
+                            <div class="o_row" name="volume">
+                                <field name="volume" required="1"/>
+                                <span>
+                                    m³
+                                </span>
+                            </div>
+                            <field name="declared_value"/>
+                            <field name="planned_delivery_min_date"/>
+                            <field name="planned_delivery_max_date"/>
+                            <!--                            <field name="delivery_delay"/>-->
+                            <!--                            <field name="planned_delivery_delay"/>-->
+                            <field name="delivery_date"/>
+                            <field name="expedition_id" readonly="1"/>
+                            <field name="nbr_documents" invisible="1"/>
+                            <field name="validation_livraison" invisible="1"/>
+							<field name="status_activation_id" attrs="{'invisible': [('step','!=','delivered')]}"/>
+
+
+
+
+
+
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="tracabilite" string="Traceability">
+                            <field name="tracabilite_ids" readonly="1">
+                                <tree default_order="create_date desc">
+                                    <field name="create_date" invisible="1"/>
+                                    <field name="date"/>
+                                    <field name="operation_type"/>
+                                    <field name="operator_id"/>
+                                    <field name="position_final"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="document" string="Documents" attrs="{'invisible': [('nbr_documents','=',0)]}">
+                            <field name="document_ids" readonly="1">
+                                <tree>
+                                    <field name="document_type_id"/>
+                                    <field name="return_type"/>
+                                    <field name="ref_doc"/>
+                                    <field name="barcode"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="customer_request_line_selector" model="ir.ui.view">
+        <field name="name">sochepress.customer.request.line.form</field>
+        <field name="model">sochepress.customer.request.line</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="expeditor_id" readonly="1" string="Expéditeur"/>
+                    <!--                        <field name="destinator_id"/>-->
+                    <field name="destinator_name" string="Nom"/>
+                    <field name="destinator_phone" string="Téléphone"/>
+                    <field name="destinator_mail" string="Email"/>
+                    <field name="d_street" placeholder="Street..."
+                           class="o_address_street" string="Addresse"
+                           readonly="1"/>
+                    <field name="d_street2" placeholder="Street 2..."
+                           class="o_address_street" string=""
+                           attrs="{'invisible': [('d_street', '=', False)]}"
+                           readonly="1"/>
+                    <field name="return_amount_text" readonly="1"
+                           string="Montant à retourner"/>
+                    <field name="delivery_delay_reason_id" string="Commentaire"
+                           options="{'no_create': True, 'no_edit': True}"/>
+                </group>
+                <group>
+                    <field name="document_ids" string='Documents à retourner' readonly='1'
+                           attrs="{'invisible': [('document_ids','=',False)]}">
+                        <tree>
+                            <field name="return_type" string='Type du document'/>
+                            <field name="name" string='Désignation'/>
+                        </tree>
+                    </field>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record id="customer_request_line_tree_view" model="ir.ui.view">
+        <field name="name">sochepress.customer.request.line.tree</field>
+        <field name="model">sochepress.customer.request.line</field>
+        <field name="priority">200</field>
+        <field name="arch" type="xml">
+            <tree decoration-info="not_colis_conform==True" default_order="customer_request desc">
+                <field name="not_colis_conform" invisible="1"/>
+                <field name="active" invisible="1"/>
+                <field name="name"/>
+                <field name="demand_date"/>
+                <field name="source_id"/>
+                <field name="destination_id"/>
+                <field name="type_colis_id"/>
+                <field name="nbre_colis"/>
+                <field name="weight"/>
+                <field name="declared_value"/>
+                <field name="insurrance_rate"/>
+                <field name="price"/>
+                <field name="return_state"/>
+                <field name="create_date" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+    <record id="customer_request_line_tree2_view" model="ir.ui.view">
+        <field name="name">sochepress.customer.request.line.tree</field>
+        <field name="model">sochepress.customer.request.line</field>
+        <field name="priority">1</field>
+        <field name="arch" type="xml">
+            <tree create="false" duplicate="false" decoration-danger="send_type == 'return_on_requests'"
+                  decoration-info="not_colis_conform==True" default_order="current_request desc">
+                <field name="not_colis_conform" invisible="1"/>
+                <field name="current_request" invisible="1"/>
+                <field name="name"/>
+                <field name="barcode"/>
+                <field name="ref_ext"/>
+                <field name="demand_date"/>
+                <field name="order_id"/>
+                <field name="expeditor_id"/>
+                <field name="source_id"/>
+                <field name="destinator_id"/>
+                <field name="destination_id"/>
+                <field name="send_type" readonly="0"/>
+                <field name="type_colis_id"/>
+                <field name="state_colis_id"/>
+                <field name="weight"/>
+                <field name="volume"/>
+                <field name="declared_value"/>
+                <field name="return_bl" invisible="1"/>
+                <field name="reference_doc" invisible="1"/>
+                <field name="reference_bl" invisible="1"/>
+                <field name="current_request" invisible="1"/>
+                <field name="current_position"/>
+                <field name="step"/>
+                <field name="delivery_state"/>
+                <field name="return_method_id" options="{'no_create': True, 'no_edit': True}"/>
+                <field name="return_amount"/>
+                <field name="price"/>
+                <field name="return_state"/>
+                <field name="invoiced" readonly="1"/>
+            </tree>
+        </field>
+    </record>
+    <record id="customer_request_line_controle_tree2_view" model="ir.ui.view">
+        <field name="name">sochepress.customer.request.line.tree</field>
+        <field name="model">sochepress.customer.request.line</field>
+        <field name="priority">1</field>
+        <field name="arch" type="xml">
+            <tree create="false" duplicate="false" decoration-danger="send_type == 'return_on_requests'"
+                  decoration-info="not_colis_conform==True" default_order="current_request desc" editable="bottom">
+                <field name="not_colis_conform" invisible="1"/>
+                <field name="current_request" invisible="1"/>
+                <field name="name" readonly="1"/>
+                <field name="ref_ext" readonly="1"/>
+                <field name="demand_date" readonly="1"/>
+                <field name="order_id" readonly="1"/>
+                <field name="expeditor_id" readonly="1"/>
+                <field name="source_id" readonly="1"/>
+                <field name="destinator_id" readonly="1"/>
+                <field name="destination_id" readonly="1"/>
+                <field name="send_type" readonly="1"/>
+                <field name="type_colis_id"  readonly="1"/>
+				<field name="status_activation_id"  />
+                <field name="weight" readonly="1"/>
+                <field name="volume" readonly="1"/>
+                <field name="declared_value" readonly="1"/>
+                <field name="return_bl" invisible="1"/>
+                <field name="reference_doc" invisible="1"/>
+                <field name="reference_bl" invisible="1"/>
+                <field name="current_request" invisible="1"/>
+                <field name="current_position" readonly="1"/>
+                <field name="step" readonly="1"/>
+				<field name="state_colis_id" readonly="1"/>
+                <field name="delivery_state" readonly="1"/>
+                <field name="return_method_id" options="{'no_create': True, 'no_edit': True}"  readonly="1"/>
+                <field name="return_amount"  readonly="1"/>
+                <field name="price"  readonly="1"/>
+                <field name="return_state" readonly="1"/>
+                <field name="invoiced" readonly="1"/>
+            </tree>
+        </field>
+    </record>
+    <record id="customer_request_line_tree_view_all_fields" model="ir.ui.view">
+        <field name="name">sochepress.customer.request.line.tree.all.fields</field>
+        <field name="model">sochepress.customer.request.line</field>
+        <field name="priority">1</field>
+        <field name="arch" type="xml">
+            <tree create="false" duplicate="false" decoration-danger="send_type == 'return_on_requests'"
+                  decoration-info="not_colis_conform==True" default_order="current_request desc">
+                <field name="id"/>
+                <field name="barcode"/>
+                <field name="name"/>
+                <field name="ref_ext"/>
+                <field name="demand_date"/>
+                <field name="expeditor_id"/>
+                <field name="source_id"/>
+                <field name="destinator_id"/>
+                <field name="destination_id"/>
+                <field name="type_colis_id"/>
+                <field name="state_colis_id"/>
+                <field name="weight"/>
+                <field name="volume"/>
+                <field name="declared_value"/>
+                <field name="current_position"/>
+                <field name="step"/>
+                <field name="delivery_state"/>
+                <field name="return_method_id" options="{'no_create': True, 'no_edit': True}"/>
+                <field name="return_amount"/>
+                <field name="price"/>
+                <field name="type"/>
+                <field name="date"/>
+                <field name="delivery_delay"/>
+                <field name="ref"/>
+                <field name="delivery_date"/>
+                <field name="category_id"/>
+                <field name="send_type" readonly="0"/>
+                <field name="customer_id"/>
+                <field name="delivery_delay_reason_id"/>
+                <field name="current_request_state"/>
+                <!--                <field name="agence_id"/>-->
+                <field name="write_uid"/>
+                <!--                <field name="new_livreur_id"/>-->
+                <field name="nature_marchandise"/>
+                <field name="create_date"/>
+                <field name="return_state" invisible="1"/>
+                <field name="invoiced" readonly="1" invisible="1"/>
+                <field name="not_colis_conform" invisible="1"/>
+                <field name="current_request" invisible="1"/>
+                <field name="order_id" invisible="1"/>
+                <field name="return_bl" invisible="1"/>
+                <field name="reference_doc" invisible="1"/>
+                <field name="reference_bl" invisible="1"/>
+                <field name="current_request" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+    <record id="customer_request_pivot_view_tt" model="ir.ui.view">
+        <field name="name">sochepress.customer.request.pivot</field>
+        <field name="model">sochepress.customer.request</field>
+        <field name="arch" type="xml">
+            <pivot>
+                <field name="customer_id" type="row"/>
+                <!--                <field name="demand_date" interval="month" type="row"/>-->
+                <!--                <field name="validation_date" interval="month" type="row"/>-->
+                <!--                <field name="state" type="row"/>-->
+                <!--                <field name="customer_lost_reason_id" type="row"/>-->
+                <!--                <field name="validator_id" type="row"/>-->
+                <field name="treatment_delay" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+    <record id="customer_request_graph_view_tt" model="ir.ui.view">
+        <field name="name">sochepress.customer.request.graph</field>
+        <field name="model">sochepress.customer.request</field>
+        <field name="arch" type="xml">
+            <graph>
+                <field name="customer_id" type="row"/>
+                <!--                <field name="demand_date" interval="month" type="row"/>-->
+                <!--                <field name="validation_date" interval="month" type="row"/>-->
+                <!--                <field name="state" type="row"/>-->
+                <!--                <field name="customer_lost_reason_id" type="row"/>-->
+                <!--                <field name="validator_id" type="row"/>-->
+                <field name="treatment_delay" type="measure"/>
+            </graph>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="customer_request_report_action">
+        <field name="name">Customer requests reports</field>
+        <field name="res_model">sochepress.customer.request</field>
+        <field name="view_mode">pivot,graph</field>
+    </record>
+    <record model="ir.actions.act_window" id="customer_request_action">
+        <field name="name">Customer requests</field>
+        <field name="res_model">sochepress.customer.request</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('type', '!=', 'passage')]</field>
+        <field name="search_view_id"
+               ref="sochepress_base.customer_request_search_filter"/>
+    </record>
+    <record model="ir.actions.act_window" id="customer_request_line_action">
+        <field name="name">Customer requests line</field>
+        <field name="res_model">sochepress.customer.request.line</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="search_view_id"
+               ref="sochepress_base.customer_request_line_search_filter"/>
+    </record>
+    <record id="rating_rating_pivot_view_delivery_delay" model="ir.ui.view">
+        <field name="name">sochepress.customer.request.line.pivot</field>
+        <field name="model">sochepress.customer.request.line</field>
+        <field name="arch" type="xml">
+            <pivot>
+                <field name="customer_id" type="row"/>
+                <field name="delivery_delay" type="measure"/>
+                <field name="planned_delivery_delay" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+    <record id="rating_rating_pivot_view_delivery_delay" model="ir.ui.view">
+        <field name="name">sochepress.customer.request.line.pivot</field>
+        <field name="model">sochepress.customer.request.line</field>
+        <field name="arch" type="xml">
+            <pivot>
+                <field name="customer_id" type="row"/>
+                <field name="delivery_delay" type="measure"/>
+                <field name="planned_delivery_delay" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="customer_request_line_action_2">
+        <field name="name">Colis</field>
+        <field name="res_model">sochepress.customer.request.line</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="domain">[('canceled', '=', False)]</field>
+        <field name="view_ids" eval="
+                            [
+                            (5, 0, 0),
+                            (0, 0, {'view_mode': 'tree', 'view_id': ref('customer_request_line_tree2_view')}),
+                            (0, 0, {'view_mode': 'kanban', 'view_id': ref('colis_kanban')}),
+                            (0, 0, {'view_mode': 'form', 'view_id': ref('customer_request_line_form_view')}),
+                          ]"/>
+        <field name="search_view_id"
+               ref="sochepress_base.customer_request_line_search_filter"/>
+    </record>
+
+    <record model="ir.actions.act_window" id="customer_request_line_controle_action_2">
+        <field name="name">Contrôle Livraison Colis</field>
+        <field name="res_model">sochepress.customer.request.line</field>
+        <field name="view_mode">form</field>
+        <field name="context">{}</field>
+        <field name="domain">[('step', '=', 'delivered'),('validation_livraison','=',True)]</field>
+        <field name="view_ids" eval="
+                            [
+                            (5, 0, 0),
+                            (0, 0, {'view_mode': 'tree', 'view_id': ref('customer_request_line_controle_tree2_view')}),
+                          ]"/>
+        <field name="search_view_id"
+               ref="sochepress_base.customer_request_line_search_filter"/>
+    </record>
+    <record model="ir.actions.act_window" id="colis_marchandises_action">
+        <field name="name">Colis marchandises</field>
+        <field name="res_model">sochepress.customer.request.line</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="domain">[('canceled', '=', False),('origin_id', '=', False),'|', ('request_id.type', '!=',
+            'passage'), ('return_request_id.type', '!=', 'passage')]
+        </field>
+        <field name="view_ids" eval="
+                            [
+                            (5, 0, 0),
+                            (0, 0, {'view_mode': 'tree', 'view_id': ref('customer_request_line_tree2_view')}),
+                            (0, 0, {'view_mode': 'kanban', 'view_id': ref('colis_kanban')}),
+                            (0, 0, {'view_mode': 'form', 'view_id': ref('customer_request_line_form_view')}),
+                          ]"/>
+        <field name="search_view_id"
+               ref="sochepress_base.customer_request_line_search_filter"/>
+    </record>
+    <record model="ir.actions.act_window" id="customer_request_line_action_all_field">
+        <field name="name">Colis à exporter</field>
+        <field name="res_model">sochepress.customer.request.line</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="view_ids" eval="
+                            [
+                            (5, 0, 0),
+                            (0, 0, {'view_mode': 'tree', 'view_id': ref('customer_request_line_tree_view_all_fields')}),
+                            (0, 0, {'view_mode': 'kanban', 'view_id': ref('colis_kanban')}),
+                            (0, 0, {'view_mode': 'form', 'view_id': ref('customer_request_line_form_view')}),
+                          ]"/>
+        <field name="search_view_id"
+               ref="sochepress_base.customer_request_line_search_filter"/>
+    </record>
+    <record model="ir.actions.act_window" id="colis_documents_actions">
+        <field name="name">Documents colis</field>
+        <field name="res_model">sochepress.customer.request.line</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="context">{'search_default_document_colis': 1}</field>
+        <field name="view_ids" eval="
+                            [
+                            (5, 0, 0),
+                            (0, 0, {'view_mode': 'tree', 'view_id': ref('customer_request_line_tree2_view')}),
+                            (0, 0, {'view_mode': 'kanban', 'view_id': ref('colis_kanban')}),
+                            (0, 0, {'view_mode': 'form', 'view_id': ref('customer_request_line_form_view')}),
+                          ]"/>
+        <field name="search_view_id"
+               ref="sochepress_base.customer_request_line_search_filter"/>
+    </record>
+    <record model="ir.actions.act_window" id="customer_request_to_invoice_action">
+        <field name="name">Customer requests to invoice</field>
+        <field name="res_model">sochepress.customer.request</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[
+            ('etat_facturation', 'not in', ['facturee', 'rien_facture']),
+            ('state', '=', 'accepted')]
+        </field>
+        <field name="context">{'search_default_customer': 1}</field>
+        <field name="search_view_id"
+               ref="sochepress_base.customer_request_search_filter"/>
+    </record>
+    <!--    <record model="ir.actions.server" id="create_inv_act">-->
+    <!--        <field name="name">Create invoice</field>-->
+    <!--        <field name="model_id" ref="model_sochepress_customer_request"/>-->
+    <!--        <field name="state">code</field>-->
+    <!--        <field name="binding_model_id"-->
+    <!--               ref="sochepress_base.model_sochepress_customer_request"/>-->
+    <!--        <field name="code">-->
+    <!--            records.action_create_invoices()-->
+    <!--        </field>-->
+    <!--    </record>-->
+    <record model="ir.actions.server" id="default_delivery_delay_reason">
+        <field name="name">Add delivery reason</field>
+        <field name="model_id" ref="model_sochepress_customer_request_line"/>
+        <field name="state">code</field>
+        <field name="binding_model_id"
+               ref="sochepress_base.model_sochepress_customer_request_line"/>
+        <field name="code">
+            records._default_delivery_delay_reason_id()
+        </field>
+    </record>
+    <record model="ir.actions.server" id="show_ref_bl_ref_doc">
+        <field name="name">Show Ref BL Ref DOC</field>
+        <field name="model_id" ref="model_sochepress_customer_request"/>
+        <field name="state">code</field>
+        <field name="binding_model_id"
+               ref="sochepress_base.model_sochepress_customer_request"/>
+        <field name="code">
+            records._compute_show_ref_bl_ref_doc()
+        </field>
+    </record>
+    <record model="ir.actions.act_window"
+            id="rating_rating_report_action_delivery_delay">
+        <field name="name">Delivery Delay</field>
+        <field name="res_model">sochepress.customer.request.line</field>
+        <field name="view_mode">pivot</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'pivot', 'view_id': ref('rating_rating_pivot_view_delivery_delay')})
+                ]"/>
+        <field name="view_mode">pivot</field>
+    </record>
+</odoo>
+    <!--<record model="ir.actions.act_window" id="rating_rating_report_action_delivery_delay">-->
+    <!--<field name="name">Delivery Delay</field>-->
+    <!--<field name="res_model">sochepress.customer.request.line</field>-->
+    <!--<field name="view_mode">pivot</field>-->
+    <!--<field name="view_ids" eval="[(5, 0, 0),-->
+    <!--                (0, 0, {'view_mode': 'pivot', 'view_id': ref('rating_rating_pivot_view_delivery_delay')})-->
+    <!--                ]"/>-->
+    <!--<field name="view_mode">pivot</field>-->
+    <!--</record>-->
+    <!--        </odoo>-->

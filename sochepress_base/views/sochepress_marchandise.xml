@@ -1,0 +1,40 @@
+<odoo>
+    <!--tree-->
+    <record id="view_sochepress_merchandise_tree" model="ir.ui.view">
+        <field name="name">sochepress.merchandise.tree</field>
+        <field name="model">sochepress.merchandise</field>
+        <field name="arch" type="xml">
+            <tree default_order="create_date desc">
+                <field name="name"/>
+                <field name="description"/>
+                <field name="create_date" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+    <!--search-->
+
+    <!--form-->
+    <record id="view_sochepress_merchandise_form" model="ir.ui.view">
+        <field name="name">sochepress.merchandiseform</field>
+        <field name="model">sochepress.merchandise</field>
+        <field name="arch" type="xml">
+            <form string="Payment multi company">
+                <sheet>
+                    <group>
+                        <field name="name" required="1"/>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!--action-->
+
+    <record id="sochepress_merchandise_action" model="ir.actions.act_window">
+        <field name="name">Merchandise type</field>
+        <field name="res_model">sochepress.merchandise</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+</odoo>

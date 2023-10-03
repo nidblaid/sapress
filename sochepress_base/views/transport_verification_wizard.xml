@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model="ir.ui.view" id="transport_verification_view_form">
+        <field name="name">transport.verification.wizard.form</field>
+        <field name="model">transport.verification.wizard</field>
+        <field name="arch" type="xml">
+            <form string="TimeSchedule wizard">
+                <sheet>
+                    <group>
+                        <p>All your colis have not been charged. Are you sure to move to next position ?</p>
+                        <field name="ot_id" invisible="1"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name='next_position' string="Move" type="object" class="oe_highlight"/>
+                    <button special="cancel" string="Cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+    <record model="ir.actions.act_window" id="transport_verification_view_action">
+        <field name="name">Transport Verification</field>
+        <field name="res_model">transport.verification.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    <!---->
+</odoo>

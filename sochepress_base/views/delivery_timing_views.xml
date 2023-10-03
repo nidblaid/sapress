@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="delivery_timing_search_view" model="ir.ui.view">
+        <field name="name">delivery.timing.search</field>
+        <field name="model">delivery.timing</field>
+        <field name="arch" type="xml">
+            <search string="Delivery Timings">
+                <field name="name" string="Timings"/>
+                <field name="start_time"/>
+                <field name="end_time"/>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="delivery_timing_view_form">
+        <field name="name">delivery.timing.form</field>
+        <field name="model">delivery.timing</field>
+        <field name="arch" type="xml">
+            <form string="Class">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" default_focus="1" placeholder="Name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <label for="start_time" string="From"/>
+                        <div>
+                            <div class="o_row o_row_readonly">
+                                <field name="start_time" widget="float_time" class="oe_inline"/>
+                                <span class="oe_inline">
+                                    To
+                                </span>
+                                <field name="end_time" class="oe_inline" widget="float_time"/>
+                            </div>
+                        </div>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="delivery_timing_view_tree">
+        <field name="name">delivery.timing.tree</field>
+        <field name="model">delivery.timing</field>
+        <field name="arch" type="xml">
+            <tree string="class" editable="top" default_order="create_date desc">
+                <field name="name"/>
+                <field name="start_time" widget="float_time"/>
+                <field name="end_time" widget="float_time"/>
+                <field name="create_date" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="delivery_timing_action">
+        <field name="name">Timings</field>
+        <field name="res_model">delivery.timing</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="delivery_timing_search_view"/>
+    </record>
+
+    <!--     <menuitem id="school_exam_settings_timing" name="Timings" parent="school_base.school_base_settings_menu" action="school_timing_action"/>-->
+</odoo>

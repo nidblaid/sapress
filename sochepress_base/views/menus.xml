@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <menuitem id="super_main_sochepress_base_menu" name="Messaging" sequence="1"
+              web_icon="sochepress_base,static/description/icon.png"/>
+
+
+    <menuitem id="main_sochepress_base_menu" name="Customer requests" sequence="1"
+              parent="super_main_sochepress_base_menu"/>
+
+    <menuitem id="sochepress_base_menu" name="Requests"
+              parent="main_sochepress_base_menu" sequence="1"
+              action="customer_request_action"/>
+    <menuitem id="sochepress_request_import" name="Import"
+              parent="main_sochepress_base_menu" sequence="2"
+              action="request_import_action"/>
+    <!--    <menuitem id="sochepress_base_request_menu" name="Requests" parent="sochepress_base_menu"-->
+    <!--               sequence="1"/>-->
+    <menuitem id="sochepress_base_request_to_invoice_menu" name="To invoice"
+              parent="main_sochepress_base_menu"
+              action="customer_request_to_invoice_action" sequence="3"/>
+    <menuitem id="sochepress_contract_base_menu" name="Contracts"
+              parent="main_sochepress_base_menu"
+              action="contract_action" sequence="4"/>
+
+
+    <menuitem id="sochepress_planification_base_menu" name="Planification"
+              parent="super_main_sochepress_base_menu"
+              sequence="3"/>
+    <!--                    <menuitem id="sochepress_logistic_operation" name="Operations" sequence="1" parent="sochepress_planification_base_menu"  action="stock.action_picking_tree_all"/>-->
+    <menuitem id="sochepress_transport_order_base_menu" name="Tranport order"
+              parent="sochepress_planification_base_menu"
+              action="transport_order_action" sequence="2"/>
+
+
+    <menuitem id="sochepress_suivi_base_menu" name="Tracking"
+              parent="super_main_sochepress_base_menu" sequence="4"/>
+    <menuitem id="sochepress_suivi_menu_colis" name="Colis"
+              parent="sochepress_suivi_base_menu"
+              action="customer_request_line_action_2" sequence="1"/>
+    <menuitem id="sochepress_suivi_menu_documents_colis" name="Documents Colis"
+              parent="sochepress_suivi_base_menu"
+              action="colis_documents_actions" sequence="2"/>
+    <menuitem id="sochepress_suivi_menu_action" name="Tracking"
+              parent="sochepress_suivi_base_menu"
+              action="tracking_colis_action" sequence="3"/>
+    <menuitem id="colis_marchandises_menu_action" name="Colis marchandises"
+              parent="sochepress_suivi_base_menu"
+              action="colis_marchandises_action" sequence="4"/>
+    <menuitem id="sochepress_suivi_menu_colis_all_fields" name="Colis à exporter"
+              parent="sochepress_suivi_base_menu"
+              action="customer_request_line_action_all_field" sequence="5"/>
+
+
+    <menuitem id="sochepress_basedata_menu" name="Database"
+              parent="super_main_sochepress_base_menu" sequence="5"/>
+    <menuitem id="sochepress_basedata_menu_customers" name="Customers"
+              parent="sochepress_basedata_menu"
+              action="account.res_partner_action_customer" sequence="3"/>
+    <menuitem id="sochepress_basedata_menu_drivers" name="Drivers"
+              parent="sochepress_basedata_menu"
+              action="drivers_action" sequence="4"/>
+    <menuitem id="sochepress_basedata_menu_vehicle" name="Vehicle"
+              parent="sochepress_basedata_menu"
+              action="fleet.fleet_vehicle_action" sequence="5"/>
+
+    <menuitem id="sochepress_basedata_menu_products_colis" name="Colis models"
+              parent="sochepress_basedata_menu"
+              action="sochepress_base.sochepress_colis_modeles" sequence="7"/>
+
+    <menuitem id="sochepress_base_report_menu" name="Reporting"
+              parent="super_main_sochepress_base_menu"
+              groups="sochepress_base.customer_request_user" sequence="6"/>
+    <menuitem id="sochepress_base_report_menu_Requests" name="Customer requests reports"
+              parent="sochepress_base_report_menu"
+              action="customer_request_report_action"/>
+    <!--              action="customer_request_report_action" sequence="6"-->
+
+
+    <menuitem id="sochepress_base_settings_menu" name="Settings"
+              parent="super_main_sochepress_base_menu" sequence="7"/>
+    <menuitem id="sochepress_destination_settings_menu" name="Destinations"
+              parent="sochepress_base_settings_menu"
+              action="sochepress_destination_action" sequence="5"/>
+    <menuitem id="sochepress_etat_colis_settings_menu" name="State of colis"
+              parent="sochepress_base_settings_menu"
+              action="sochepress_etat_colis_action" sequence="8"/>
+    <menuitem id="sochepress_annulation_settings_menu" name="Annulation motivations"
+              parent="sochepress_base_settings_menu"
+              action="sochepress_motif_abandon_action" sequence="8"/>
+    <menuitem id="sochepress_agences_settings_menu" name="Agencies"
+              parent="sochepress_base_settings_menu"
+              action="sochepress_agences_action" sequence="6"/>
+    <menuitem id="sochepress_plateformes_settings_menu" name="Platforms"
+              parent="sochepress_base_settings_menu"
+              action="sochepress_plateformes_action" sequence="7"/>
+    <menuitem id="sochepress_contract_stage_settings_menu" name="Contract stages"
+              parent="sochepress_base_settings_menu"
+              action="sochepress_contract_stage_action" sequence="8"/>
+    <menuitem id="sochepress_price_liste_menu" name="Price liste"
+              parent="sochepress_base_settings_menu"
+              action="soche_price_liste_action" sequence="9"/>
+    <menuitem id="sochepress_price_rule_menu" name="Price liste rule"
+              parent="sochepress_base_settings_menu"
+              action="soche_price_rule_action" sequence="10"/>
+    <menuitem id="sochepress_basedata_menu_type_colis" name="Type of colis"
+              parent="sochepress_base_settings_menu"
+              action="type_colis_action" sequence="2"/>
+    <menuitem id="sochepress_comment_menu" name="Comments"
+              parent="sochepress_base_settings_menu"
+              action="soch_colis_delivery_action" sequence="12"/>
+    <menuitem id="sochepress_base_menu_sls_revenu_method" name="Return of funds method"
+              parent="sochepress_base_settings_menu" action="sls_return_method_action"
+              sequence="8"/>
+    <menuitem id="sochepress_sochepress_merchandise_menu"
+              name="Merchandise Nature"
+              parent="sochepress_base.sochepress_base_settings_menu"
+              action="sochepress_merchandise_action"
+              sequence="8"/>
+    <menuitem id="sochepress_base_menu_sls_document_colis" name="Document Colis"
+              parent="sochepress_base_settings_menu" action="sls_document_colis_action" sequence="3"/>
+    <menuitem id="sochepress_base_menu_sls_document_type" name="Document Type"
+              parent="sochepress_base_settings_menu" action="sls_document_type_action" sequence="4"/>
+    <menuitem id="sls_cash_return_menu_setting" name="Settings" parent="sochepress_base.sochepress_base_settings_menu"
+              sequence="1"
+              action="sls_config_settings_action"/>
+
+    <menuitem id="rating_analysis_menu" name="Evaluation Customer"
+              parent="sochepress_base.sochepress_base_report_menu"
+              sequence="11"
+              action="rating_rating_report_action"/>
+
+    <menuitem id="rating_analysis_menu_destinator" name="Evaluation Destinator"
+              parent="sochepress_base.sochepress_base_report_menu"
+              sequence="12"
+              action="rating_rating_report_action_destinator"/>
+
+    <menuitem id="rating_analysis_menu_delay" name="Delivery delay"
+              parent="sochepress_base.sochepress_base_report_menu"
+              sequence="13"
+              action="rating_rating_report_action_delivery_delay"/>
+
+    <menuitem id="sls_type_sms" name="SMS type"
+              parent="sochepress_base.sochepress_base_settings_menu"
+              sequence="14"
+              action="sls_sms_type_action"/>
+    <menuitem id="approval_times" name="Approval times"
+              parent="contacts.res_partner_menu_config"
+              sequence="4"
+              action="delivery_timing_action"
+    />
+
+    <!--    <menuitem id="my_shipping_adresses" name="My shipping addresses"-->
+    <!--              parent="website.menu_dashboard"-->
+    <!--              />-->
+    <!--=======-->
+
+    <menuitem id="sls_cash_return_menu_ot_collecting"
+              name="Collecting transport order"
+              parent="sochepress_base.sochepress_planification_base_menu" sequence="2"
+              action="sochepress_base.transport_order_action_collecting"/>
+
+    <menuitem id="sls_cash_return_menu_primary" name="Primary transport order"
+              parent="sochepress_base.sochepress_planification_base_menu" sequence="3"
+              action="sochepress_base.transport_order_action_primary"/>
+
+</odoo>

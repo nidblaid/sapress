@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="type_colis_search_filter" model="ir.ui.view">
+        <field name="name">sochepress.type.colis.search</field>
+        <field name="model">sochepress.type.colis</field>
+        <field name="arch" type="xml">
+            <search string="Type of colis">
+                <field name="name"/>
+                <group string="Group by">
+                    <filter name="weight" string="Weight"
+                            context="{'group_by':'weight'}"/>
+                    <filter name="volume" string="Volume"
+                            context="{'group_by':'volume'}"/>
+                    <!--                    <filter name="facturation_mode" string="Invoicing mode" context="{'group_by':'facturation_mode'}"/>-->
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="sochepress_type_of_colis_form_view" model="ir.ui.view">
+        <field name="name">sochepress.type.colis.form</field>
+        <field name="model">sochepress.type.colis</field>
+        <field name="arch" type="xml">
+            <form string="Type of colis">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <!--                        <button class="oe_stat_button" icon="fa-book" name="action_contract_invoice" type="object">-->
+                        <!--                            <field name="invoice_count" widget="statinfo" string="Invoices"/>-->
+                        <!--                        </button>-->
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" required="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <label for="weight"/>
+                            <div class="o_row" name="weight">
+                                <field name="weight" required="1"/>
+                                <span>
+                                    Kg
+                                </span>
+                            </div>
+                        </group>
+                        <group>
+                            <label for="volume"/>
+                            <div class="o_row" name="volume">
+                                <field name="volume" required="1"/>
+                                <span>
+                                    m³
+                                </span>
+                            </div>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="characteristics"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="type_of_colis_tree_view_tt" model="ir.ui.view">
+        <field name="name">sochepress.type.colis.tree</field>
+        <field name="model">sochepress.type.colis</field>
+        <field name="arch" type="xml">
+            <tree default_order="create_date desc">
+                <field name="name"/>
+                <field name="weight"/>
+                <field name="volume"/>
+                <field name="create_date" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="type_colis_action">
+        <field name="name">Type of colis</field>
+        <field name="res_model">sochepress.type.colis</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="sochepress_base.type_colis_search_filter"/>
+    </record>
+
+
+    <record id="tracking_colis_search_filter" model="ir.ui.view">
+        <field name="name">sochepress.tracabilite.colis.search</field>
+        <field name="model">sochepress.tracabilite.colis</field>
+        <field name="arch" type="xml">
+            <search string="Colis tracking">
+                <field name="name"/>
+                <field name="operation_type"/>
+                <group string="Group by">
+                    <filter name="colis" string="Colis"
+                            context="{'group_by':'colis_id'}"/>
+                    <filter name="operation_type" string="Operation type"
+                            context="{'group_by':'operation_type'}"/>
+                    <filter name="operator_id" string="Operator"
+                            context="{'group_by':'operator_id'}"/>
+                    <!--                    <filter name="facturation_mode" string="Invoicing mode" context="{'group_by':'facturation_mode'}"/>-->
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="sochepress_tracking_of_colis_form_view" model="ir.ui.view">
+        <field name="name">sochepress.tracabilite.colis.form</field>
+        <field name="model">sochepress.tracabilite.colis</field>
+        <field name="arch" type="xml">
+            <form string="Tracking of colis" create="false" duplicate="false">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <!--                        <button class="oe_stat_button" icon="fa-book" name="action_contract_invoice" type="object">-->
+                        <!--                            <field name="invoice_count" widget="statinfo" string="Invoices"/>-->
+                        <!--                        </button>-->
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="source_id" invisible="1"/>
+                            <field name="active" invisible="1"/>
+                            <field name="position_final"/>
+                            <field name="operation_type"/>
+                            <field name="operator_id"/>
+                        </group>
+                        <group>
+                            <!--<field name="destination_id"/>-->
+                            <field name="date"/>
+
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="tracking_of_colis_tree_view_ttt" model="ir.ui.view">
+        <field name="name">sochepress.tracabilite.colis.tree</field>
+        <field name="model">sochepress.tracabilite.colis</field>
+        <field name="arch" type="xml">
+            <tree create="false" duplicate="false" default_order="create_date desc">
+                <field name="name"/>
+                <field name="active" invisible="1"/>
+                <field name="date"/>
+                <field name="operation_type"/>
+                <field name="operator_id"/>
+                <field name="position_final"/>
+                <field name="create_date" invisible="1"/>
+                <!--                <field name="source_id"/>-->
+                <!--<field name="destination_id"/>-->
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="tracking_colis_action">
+        <field name="name">Tracking of colis</field>
+        <field name="res_model">sochepress.tracabilite.colis</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'group_by': ['colis_id', ]}</field>
+        <field name="search_view_id"
+               ref="sochepress_base.tracking_colis_search_filter"/>
+    </record>
+
+</odoo>

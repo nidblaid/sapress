@@ -1,0 +1,88 @@
+<odoo>
+    <data>
+
+        <record id="qr_custom_paysage" model="report.paperformat">
+            <field name="name">Format paysage pour etiquette colis 10*10</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">100</field>
+            <field name="page_width">100</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">5</field>
+            <field name="margin_bottom">5</field>
+            <field name="margin_left">1</field>
+            <field name="margin_right">1</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">3</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="qr_custom_paysage_new" model="report.paperformat">
+            <field name="name">Nouveau format paysage etiquette colis A4</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">297</field>
+            <field name="page_width">210</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">1</field>
+            <field name="margin_bottom">1</field>
+            <field name="margin_left">1</field>
+            <field name="margin_right">1</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">3</field>
+            <field name="dpi">90</field>
+        </record>
+
+
+        <!--        <template id="report_colis_barcode">-->
+        <!--            <t t-call="web.html_container">-->
+        <!--                <div t-foreach="docs" t-as="page_docs" class="page article">-->
+        <!--                    <t t-set="content" t-value="o.barcode"/>-->
+        <!--                    <img class="barcode"-->
+        <!--                         t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s&amp;humanreadable=1' % ('Code128', content, 600, 100)"-->
+        <!--                         alt="Barcode"/>-->
+        <!--                </div>-->
+        <!--            </t>-->
+        <!--        </template>-->
+
+        <template id="qr_report_colis_barcode_dix">
+            <t t-call="web.html_container">
+                <div t-foreach="docs" class="page article" t-as="o">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row text-center">
+                                <div class="col-12">
+                                    <img
+                                        t-att-src="'/report/qr/?value=%s&amp;error_correction=%s' % (o._generate_my_qr_code(), 3)"
+                                        style="width:80%"/>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <i>Sapress logistique et messagerie, 0522589898/99, service-client@sapress.ma</i>
+                                <br/>
+                                <i>SAPRESS livre vos clients partout au Maroc.</i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+
+        <report
+            string="Colis QR Code (PDF)"
+            id="qr_action_report_colis_barcode_dix"
+            model="sochepress.customer.request.line"
+            report_type="qweb-pdf"
+            name="sochepress_base.qr_report_colis_barcode_dix"
+            file="sochepress_base.qr_report_colis_barcode_dix"
+            paperformat="sochepress_base.qr_custom_paysage"
+            print_report_name="'Colis barcode - %s' % (object.name)"
+        />
+
+        <!--            paperformat="sochepress_base.custom_paysage"-->
+        <!--            paperformat="sochepress_base.custom_paysage_new"-->
+
+    </data>
+</odoo>

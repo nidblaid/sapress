@@ -1,0 +1,99 @@
+<odoo>
+
+    <record id="inwi_config_settings_view_form" model="ir.ui.view">
+        <field name="name">inwi.config.settings.form</field>
+        <field name="model">inwi.config.settings</field>
+        <field name="arch" type="xml">
+                <form string="Inwi Config">
+                    <header>
+                        <button name="test_conn_ping" type="object"
+                                class="oe_highlight"
+                                string="Test Ping"
+                        />
+                        <button name="test_conn_telnet" type="object"
+                                class="oe_highlight"
+                                string="Test Telnet"
+                        />
+                    </header>
+                    <sheet>
+                    <group>
+                        <group>
+                <field name="partner_id"/>                      
+                <field name="keySecret"/>         
+                        </group>   
+                        <group>
+                <field name="USER"/>
+                <field name="UserName"/>
+                <field name="forceSend"/>
+                </group>     
+                <group>
+                <field name="documents_ids" widget="many2many_tags"/>                   
+                </group>     
+                <group>
+                <field name="product_id"/>  
+                <field name="weight"/> 
+                </group>
+                                                            
+                    </group>
+                      <notebook>
+                            <page string="Url token">
+                            <group>
+                            <field name="url_token"/>
+                            <field name="CANAL_token"/>
+                            <field name="port_telnet"/>
+                            <field name="host"/>
+                            </group>
+                            </page>
+                            <page string="Url colis">
+                            <group>
+                            <field name="url_colis"/>
+                            <field name="CANAL_colis"/>
+                            <field name="deliveriesType"/>
+                            </group>
+                            </page>
+                            <page string="Date">
+                            <group>
+                            <field name="set_date"/>
+                            <field name="start_date" attrs="{'invisible':[('set_date', '!=', True)], 'required': [('set_date', '=', True)]}"/>
+                            <field name="end_date" attrs="{'invisible':[('set_date', '!=', True)], 'required': [('set_date', '=', True)]}"/>
+                            </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+                </form>
+        </field>
+    </record>
+
+
+
+    <record id="inwi_config_settings_view_tree" model="ir.ui.view">
+        <field name="name">inwi.config.settings.tree</field>
+        <field name="model">inwi.config.settings</field>
+        <field name="arch" type="xml">
+            <tree string="Inwi Config">
+                 <field name="partner_id"/>
+                <field name="url_token"/>
+                <field name="url_colis"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record model="ir.actions.act_window" id="inwi_config_settings_action">
+      <field name="name">Inwi Config</field>
+      <field name="res_model">inwi.config.settings</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="config_api_inwi_menu" name="Configuration api inwi"
+              parent="sochepress_base.sochepress_base_settings_menu"
+              action="inwi_config_settings_action" sequence="9"/>
+
+
+
+</odoo>

@@ -1,0 +1,261 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* kzm_invoice_report
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-01-15 14:06+0000\n"
+"PO-Revision-Date: 2019-01-15 14:06+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: kzm_invoice_report
+#: model_terms:ir.ui.view,arch_db:kzm_invoice_report.kzm_report_invoice_document
+msgid "<br/>ICE:"
+msgstr ""
+
+#. module: kzm_invoice_report
+#: model_terms:ir.ui.view,arch_db:kzm_invoice_report.kzm_report_invoice_document
+msgid ""
+"<span groups=\"account.group_show_line_subtotals_tax_excluded\">Amount\n"
+"                </span>\n"
+"                <span groups=\"account.group_show_line_subtotals_tax_included\">Total\n"
+"                    Price\n"
+"                </span>"
+msgstr ""
+
+#. module: kzm_invoice_report
+#: model_terms:ir.ui.view,arch_db:kzm_invoice_report.kzm_report_invoice_document
+msgid "<span style=\"width:25%\">Bank :</span>"
+msgstr "<span style=\"width:25%\">Banque :</span>"
+
+#. module: kzm_invoice_report
+#: model_terms:ir.ui.view,arch_db:kzm_invoice_report.kzm_report_invoice_document
+msgid ""
+"<span>\n"
+"                    <strong>Banking coordinates</strong>\n"
+"                </span>\n"
+"                <br/>"
+msgstr ""
+
+#. module: kzm_invoice_report
+#: model_terms:ir.ui.view,arch_db:kzm_invoice_report.kzm_report_invoice_document
+msgid "<span>Description</span>"
+msgstr "<span>Description</span>"
+
+#. module: kzm_invoice_report
+#: model_terms:ir.ui.view,arch_db:kzm_invoice_report.kzm_report_invoice_document
+msgid "<span>Disc.(%)</span>"
+msgstr "<span>Rem.(%)</span>"
+
+#. module: kzm_invoice_report
+#: model_terms:ir.ui.view,arch_db:kzm_invoice_report.kzm_report_invoice_document
+msgid "<span>Quantity</span>"
+msgstr "<span>Quantité</span>"
+
+#. module: kzm_invoice_report
+#: model_terms:ir.ui.view,arch_db:kzm_invoice_report.kzm_report_invoice_document
+msgid "<span>Source Document</span>"
+msgstr "<span>Document d'origine</span>"
+
+#. module: kzm_invoice_report
+#: model_terms:ir.ui.view,arch_db:kzm_invoice_report.kzm_report_invoice_document
+msgid "<span>Taxes</span>"
+msgstr "<span>Taxes</span>"
+
+#. module: kzm_invoice_report
+#: model_terms:ir.ui.view,arch_db:kzm_invoice_report.kzm_report_invoice_document
+msgid "<span>Unit Price</span>"
+msgstr "<span>Prix Unitaire</span>"
+
+#. module: kzm_invoice_report
+#: model_terms:ir.ui.view,arch_db:kzm_invoice_report.kzm_report_invoice_document
+msgid "<strong class=\"mr16\">Subtotal</strong>"
+msgstr "<strong class=\"mr16\">Sous-total</strong>"
+
+#. module: kzm_invoice_report
+#: model_terms:ir.ui.view,arch_db:kzm_invoice_report.kzm_report_invoice_document
+msgid "<strong>Designation</strong>"
+msgstr "<strong>Désignation</strong>"
+
+#. module: kzm_invoice_report
+#: model_terms:ir.ui.view,arch_db:kzm_invoice_report.kzm_report_invoice_document
+msgid "<strong>Nᵒ</strong>"
+msgstr ""
+
+#. module: kzm_invoice_report
+#: model_terms:ir.ui.view,arch_db:kzm_invoice_report.kzm_report_invoice_document
+msgid "<strong>Reference</strong>"
+msgstr "<strong>Référence</strong>"
+
+#. module: kzm_invoice_report
+#: model_terms:ir.ui.view,arch_db:kzm_invoice_report.kzm_report_invoice_document
+msgid "<strong>Total Discount</strong>"
+msgstr "<strong>Remise Totale</strong>"
+
+#. module: kzm_invoice_report
+#: model_terms:ir.ui.view,arch_db:kzm_invoice_report.kzm_report_invoice_document
+msgid "<strong>Total HT</strong>"
+msgstr "<strong>Total HT</strong>"
+
+#. module: kzm_invoice_report
+#: model_terms:ir.ui.view,arch_db:kzm_invoice_report.kzm_report_invoice_document
+msgid "Account number :"
+msgstr "Numéro du compte : "
+
+#. module: kzm_invoice_report
+#: model:ir.model.fields,field_description:kzm_invoice_report.field_res_company__kzm_amount_letter_invoicing
+#: model:ir.model.fields,field_description:kzm_invoice_report.field_res_config_settings__kzm_amount_letter_invoicing
+msgid "Amount letter"
+msgstr "Montant en lettre"
+
+#. module: kzm_invoice_report
+#: model_terms:ir.ui.view,arch_db:kzm_invoice_report.kzm_report_invoice_document
+msgid "Arrêté la présente facture à la somme de :"
+msgstr "Arrêté la présente facture à la somme de :"
+
+#. module: kzm_invoice_report
+#: model:ir.model.fields,field_description:kzm_invoice_report.field_res_company__kzm_bank_invoicing
+#: model:ir.model.fields,field_description:kzm_invoice_report.field_res_config_settings__kzm_bank_invoicing
+msgid "Bank"
+msgstr "Banque"
+
+#. module: kzm_invoice_report
+#: model:ir.model.fields,field_description:kzm_invoice_report.field_res_company__kzm_code_designation_invoicing
+#: model:ir.model.fields,field_description:kzm_invoice_report.field_res_config_settings__kzm_code_designation_invoicing
+msgid "Code / Designiation"
+msgstr "Code / Designiation"
+
+#. module: kzm_invoice_report
+#: model_terms:ir.ui.view,arch_db:kzm_invoice_report.kzm_report_invoice_document
+msgid "Code BIC/SWIFT :"
+msgstr "Code BIC/SWIFT :"
+
+#. module: kzm_invoice_report
+#: model_terms:ir.ui.view,arch_db:kzm_invoice_report.kzm_report_invoice_document
+msgid "Code IBAN :"
+msgstr "Code IBAN :"
+
+#. module: kzm_invoice_report
+#: model_terms:ir.ui.view,arch_db:kzm_invoice_report.kzm_report_invoice_document
+msgid "Code client:"
+msgstr "Code client:"
+
+#. module: kzm_invoice_report
+#: model:ir.model,name:kzm_invoice_report.model_res_company
+msgid "Company"
+msgstr "Société"
+
+#. module: kzm_invoice_report
+#: model:ir.model,name:kzm_invoice_report.model_res_config_settings
+msgid "Config Settings"
+msgstr "Paramètres de config"
+
+#. module: kzm_invoice_report
+#: model:ir.model.fields,field_description:kzm_invoice_report.field_res_config_settings__kzm_taxe_invoicing
+msgid "Disable Taxe"
+msgstr "Désactiver la Taxe"
+
+#. module: kzm_invoice_report
+#: model:ir.model.fields,field_description:kzm_invoice_report.field_res_company__kzm_discount_invoicing
+#: model:ir.model.fields,field_description:kzm_invoice_report.field_res_config_settings__kzm_discount_invoicing
+msgid "Discount"
+msgstr "Remise"
+
+#. module: kzm_invoice_report
+#: model_terms:ir.ui.view,arch_db:kzm_invoice_report.kzm_report_invoice_document
+msgid "ICE:"
+msgstr ""
+
+#. module: kzm_invoice_report
+#: model:ir.model,name:kzm_invoice_report.model_account_move
+msgid "Journal Entries"
+msgstr "Pièces comptables"
+
+#. module: kzm_invoice_report
+#: model:ir.model,name:kzm_invoice_report.model_account_invoice_line
+msgid "Invoice Line"
+msgstr "Ligne de facture"
+
+#. module: kzm_invoice_report
+#: model:ir.model.fields,field_description:kzm_invoice_report.field_account_invoice__amount_to_text
+msgid "Montant total en lettre"
+msgstr ""
+
+#. module: kzm_invoice_report
+#: model:ir.model.fields,field_description:kzm_invoice_report.field_res_company__kzm_numbering_invoicing
+#: model:ir.model.fields,field_description:kzm_invoice_report.field_res_config_settings__kzm_numbering_invoicing
+msgid "Numbering Invoicing"
+msgstr "Numérotation"
+
+#. module: kzm_invoice_report
+#: model:ir.model.fields,field_description:kzm_invoice_report.field_res_company__kzm_object_invoicing
+#: model:ir.model.fields,field_description:kzm_invoice_report.field_res_config_settings__kzm_object_invoicing
+msgid "Object"
+msgstr "Objet"
+
+#. module: kzm_invoice_report
+#: model_terms:ir.ui.view,arch_db:kzm_invoice_report.kzm_account_res_config_settings_view_form
+msgid "Reporting"
+msgstr "Rapport"
+
+#. module: kzm_invoice_report
+#: model_terms:ir.ui.view,arch_db:kzm_invoice_report.kzm_account_res_config_settings_view_form
+msgid "Show the column numbering"
+msgstr "Afficher la colonne de numérotation"
+
+#. module: kzm_invoice_report
+#: model:ir.model.fields,field_description:kzm_invoice_report.field_res_company__kzm_taxe_invoicing
+msgid "Taxe"
+msgstr "Taxe"
+
+#. module: kzm_invoice_report
+#: model_terms:ir.ui.view,arch_db:kzm_invoice_report.kzm_account_res_config_settings_view_form
+msgid "show the bank informations"
+msgstr "Afficher les coordonnées bancaires"
+
+#. module: kzm_invoice_report
+#: model_terms:ir.ui.view,arch_db:kzm_invoice_report.kzm_account_res_config_settings_view_form
+msgid "show the column taxe"
+msgstr "Afficher la colone taxe"
+
+#. module: kzm_invoice_report
+#: model_terms:ir.ui.view,arch_db:kzm_invoice_report.kzm_account_res_config_settings_view_form
+msgid "show the quotation object"
+msgstr "Afficher la colone taxe"
+
+#. module: kzm_invoice_report
+#: model_terms:ir.ui.view,arch_db:kzm_invoice_report.kzm_account_res_config_settings_view_form
+msgid "show the total amount letter"
+msgstr "Afficher le maontant totale en lettre"
+
+#. module: kzm_invoice_report
+#: model_terms:ir.ui.view,arch_db:kzm_invoice_report.kzm_account_res_config_settings_view_form
+msgid "show the total discount"
+msgstr "Afficher la remise totale"
+
+#. module: kzm_invoice_report
+#: model_terms:ir.ui.view,arch_db:kzm_invoice_report.kzm_account_res_config_settings_view_form
+msgid "split the description to code / designation"
+msgstr "Diviser la description en code / designation"
+
+#. module: kzm_invoice_report
+#: model_terms:ir.ui.view,arch_db:kzm_invoice_report.kzm_account_res_config_settings_view_form
+msgid "Print Report Without Header and Footer"
+msgstr "Imprimer la facture sans entête et pied de page"
+
+#. module: kzm_invoice_report
+#: model:ir.actions.report,name:kzm_invoice_report.account_invoice_without_header_footer
+msgid "Invoice without Header and Footer"
+msgstr "Facture sans entête et pied de page"
+
+#. module: kzm_invoice_report
+#: model:ir.model.fields,field_description:kzm_invoice_report.field_res_config_settings__group_without_header_footer_account
+msgid "Without Header and Footer"
+msgstr "Sans Entête et pied de page"

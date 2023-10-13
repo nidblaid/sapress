@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">Partner CIN Required</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='invite_users']" position='after'>
+                <h2>CIN obligatoire pour les partenaires</h2>
+                <div class="row mt16 o_settings_container" name="partner_cin_required">
+                    <div class="col-xs-12 col-md-6 o_setting_box">
+                        <div class="o_setting_right_pane">
+                            <field name="cin_partenaire_obligatoire"/>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

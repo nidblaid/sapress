@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--   sale.order.line : tree view inherit     -->
+        <record id="al_view_sale_order_line_tree_rates" model="ir.ui.view">
+            <field name="name">al.view.sale.order.line.tree.rates</field>
+            <field name="model">sale.order.line</field>
+            <field name="inherit_id" ref="sale.view_order_line_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='price_subtotal']" position="before">
+                    <field name="total_purchase_price"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- sale.order.line : form view inherit -->
+        <record id="al_sale_order_line_view_form_readonly_rates" model="ir.ui.view">
+            <field name="name">al.sale.order.line.view.form.readonly.rates</field>
+            <field name="model">sale.order.line</field>
+            <field name="inherit_id" ref="sale.sale_order_line_view_form_readonly"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='product_id']" position="before">
+                    <!--                    <button name="action_compute_purchase_price" type="object" string="Compute Purchase price"/>-->
+                    <field name="product_category_id"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- sale.order : inherit form -->
+        <record id="al_view_order_form_inherit_secure_invbutton" model="ir.ui.view">
+            <field name="name">al.view.order.form.inherit.secure.invbutton</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='order_line']/tree//field[@name='state']" position="before">
+                    <field name="margin_net"/>
+                </xpath>
+                <xpath expr="//group[hasclass('oe_subtotal_footer')]" position="inside">
+                    <field name="margin_net"/>
+                    <label for="margin_rate"/>
+                    <div class="oe_right">
+                        <field class="oe_inline" name="margin_rate"/>
+                        <span> %</span>
+                    </div>
+                    <label for="margin_rate_net"/>
+                    <div class="oe_right">
+                        <field class="oe_inline" name="margin_rate_net"/>
+                        <span> %</span>
+                    </div>
+                </xpath>
+                <!--       add delivery mode         -->
+                <xpath expr="//field[@name='payment_term_id']" position="after">
+                    <field name="delivery_mode_id" widget="selection"/>
+                    <field name="payment_mode_id" widget="selection"/>
+                    <field name="carrier_id" readonly="1"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Inherit Form View to Modify it -->
+        <record id="al_view_margin_sale_order_line_form_inherit" model="ir.ui.view">
+            <field name="name">al.view.margin.sale.order.line.form.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_margin.sale_margin_sale_order_line_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='order_line']/tree//field[@name='price_unit']" position="before">
+                    <xpath expr="//field[@name='order_line']/tree//field[@name='purchase_price']" position="move"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree//field[@name='tax_id']" position="before">
+                    <xpath expr="//field[@name='order_line']/tree//field[@name='discount']" position="move"/>
+                    <field name="tarif_uom" widget="monetary" optional="hide"/>
+                    <field name="tarif_unit" widget="monetary" optional="hide"/>
+                </xpath>
+
+            </field>
+        </record>
+
+
+        <record id="al_view_order_tree_inherit_twizza" model="ir.ui.view">
+            <field name="name">al.view.order.tree.inherit.twizza</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="carrier_id" optional="show"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- remove create invoice from Action in list view -->
+        <record id="sale.action_view_sale_advance_payment_inv" model="ir.actions.act_window">
+            <field name="groups_id" eval="[(6, False,[ref('al_sale_twizza.group_create_invoices_from_sales')])]"/>
+        </record>
+
+    </data>
+</odoo>

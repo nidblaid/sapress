@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="al_view_res_partner_inherit_params" model="ir.ui.view">
+        <field name="name">al.view.res.partner.inherit.params</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//group[@name='sale']/field[@name='user_id']" position="before">
+                <field name="area_id" options="{'no_open': True}"/>
+            </xpath>
+            <xpath expr="//group[@name='sale']" position="inside">
+                <field name="delivery_mode_id" widget="selection"/>
+                <field name="payment_mode_id" widget="selection"/>
+                <field name="partner_type_id" widget="selection"/>
+                <field name="home_consumption" widget="boolean"/>
+                <field name="out_home_consumption" widget="boolean"/>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

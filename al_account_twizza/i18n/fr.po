@@ -1,0 +1,207 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* al_account_twizza
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0+e-20220425\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-03-26 08:49+0000\n"
+"PO-Revision-Date: 2023-03-26 08:49+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: al_account_twizza
+#: model_terms:ir.ui.view,arch_db:al_account_twizza.report_invoice_document
+#: model_terms:ir.ui.view,arch_db:al_account_twizza.report_saleorder_document
+msgid ""
+"<b>\n"
+"                        ATTENTION - Nos coordonnées bancaires ont changé :<br/>\n"
+"                        Nouvel IBAN FR76 3000 4025 2000 0101 6682 983 - BIC BNPAFRPPXXX\n"
+"                    </b>"
+msgstr ""
+
+#. module: al_account_twizza
+#: model:res.groups,name:al_account_twizza.group_account_lock_partners
+msgid "Account : Lock partners"
+msgstr "Comptabilité : Blocage des clients"
+
+#. module: al_account_twizza
+#: model:res.groups,name:al_account_twizza.group_account_pre_account
+msgid "Account : Pre-account"
+msgstr "Comptabilité : Pré-Compta"
+
+#. module: al_account_twizza
+#: model:res.groups,name:al_account_twizza.group_account_invoice_adv
+msgid "Account Invoices : ADV"
+msgstr "Facturation : ADV"
+
+#. module: al_account_twizza
+#: model:res.groups,name:al_account_twizza.group_account_invoice_commercial
+msgid "Account Invoices : Commercial"
+msgstr "Facturation : Commercial"
+
+#. module: al_account_twizza
+#: model:ir.module.category,name:al_account_twizza.accounting_statement_category
+msgid "Account statement"
+msgstr "Comptabilité : Recouvrement"
+
+#. module: al_account_twizza
+#: model:ir.model.fields,field_description:al_account_twizza.field_res_partner__allow_lock
+#: model:ir.model.fields,field_description:al_account_twizza.field_res_users__allow_lock
+msgid "Allow Lock on sales"
+msgstr "Autoriser le blocage des ventes"
+
+#. module: al_account_twizza
+#: model:ir.actions.act_window,name:al_account_twizza.action_move_in_invoice_type_twizza
+msgid "Bills"
+msgstr "Factures"
+
+#. module: al_account_twizza
+#: model:ir.model,name:al_account_twizza.model_res_partner
+msgid "Contact"
+msgstr ""
+
+#. module: al_account_twizza
+#: model:ir.actions.act_window,name:al_account_twizza.action_move_out_refund_type_twizza
+#: model:ir.ui.menu,name:al_account_twizza.menu_purchase_credit_note_action
+#: model:ir.ui.menu,name:al_account_twizza.menu_sales_credit_note_action
+msgid "Credit Notes"
+msgstr "Avoirs"
+
+#. module: al_account_twizza
+#: model:ir.model.fields,field_description:al_account_twizza.field_res_partner__default_intrastat_transport_id
+#: model:ir.model.fields,field_description:al_account_twizza.field_res_users__default_intrastat_transport_id
+msgid "Default intrastat Transport mode"
+msgstr "Mode de transport intrastat"
+
+#. module: al_account_twizza
+#: model:ir.model.fields,field_description:al_account_twizza.field_res_partner__default_intrastat_id
+#: model:ir.model.fields,field_description:al_account_twizza.field_res_users__default_intrastat_id
+msgid "Default intrastat code"
+msgstr "Intrastat par défaut"
+
+#. module: al_account_twizza
+#: model:ir.actions.act_window,name:al_account_twizza.action_view_statements
+msgid "Follow-up Reports"
+msgstr "Rapports de suivi"
+
+#. module: al_account_twizza
+#: model:ir.model.fields,field_description:al_account_twizza.field_res_partner__default_incoterm_id
+#: model:ir.model.fields,field_description:al_account_twizza.field_res_users__default_incoterm_id
+msgid "Incoterm"
+msgstr ""
+
+#. module: al_account_twizza
+#: model:ir.ui.menu,name:al_account_twizza.menu_purchase_invoice_action
+#: model:ir.ui.menu,name:al_account_twizza.menu_sales_invoice_action
+msgid "Invoice"
+msgstr "Facture"
+
+#. module: al_account_twizza
+#: model:ir.actions.act_window,name:al_account_twizza.action_move_out_invoice_type_twizza
+msgid "Invoices"
+msgstr "Factures"
+
+#. module: al_account_twizza
+#: model:ir.model,name:al_account_twizza.model_account_move
+msgid "Journal Entries"
+msgstr "Pièces comptables"
+
+#. module: al_account_twizza
+#: model:ir.model,name:al_account_twizza.model_account_move_line
+msgid "Journal Item"
+msgstr "Écriture comptable"
+
+#. module: al_account_twizza
+#: model:ir.model.fields,field_description:al_account_twizza.field_res_partner__lock_on_sales
+#: model:ir.model.fields,field_description:al_account_twizza.field_res_users__lock_on_sales
+msgid "Locked in sales"
+msgstr "Ventes Bloquées"
+
+#. module: al_account_twizza
+#: model:ir.model.fields,field_description:al_account_twizza.field_account_payment_term__max_payment_delay
+msgid "Max. Payment Delay (days)"
+msgstr "Délai de paiement max. (jours)"
+
+#. module: al_account_twizza
+#: model:ir.model.fields,field_description:al_account_twizza.field_account_move__payment_mode_id
+msgid "Payment Mode"
+msgstr "Mode de paiement"
+
+#. module: al_account_twizza
+#: model:ir.model.fields,field_description:al_account_twizza.field_account_move_line__tarif_unit
+#: model_terms:ir.ui.view,arch_db:al_account_twizza.report_invoice_document
+msgid "Net Price Unit (unit)"
+msgstr "P.U. Net (Pièce)"
+
+#. module: al_account_twizza
+#: model:ir.model.fields,field_description:al_account_twizza.field_account_move_line__tarif_uom
+#: model_terms:ir.ui.view,arch_db:al_account_twizza.report_invoice_document
+msgid "Net Price Unit (uom)"
+msgstr "P.U. Net (UDM)"
+
+#. module: al_account_twizza
+#: model:ir.model,name:al_account_twizza.model_account_payment_term
+msgid "Payment Terms"
+msgstr "Conditions de paiement"
+
+#. module: al_account_twizza
+#: model:ir.model,name:al_account_twizza.model_purchase_order
+msgid "Purchase Order"
+msgstr "Commande fournisseur"
+
+#. module: al_account_twizza
+#: model:ir.model,name:al_account_twizza.model_purchase_order_line
+msgid "Purchase Order Line"
+msgstr "Ligne de commande d'achat"
+
+#. module: al_account_twizza
+#: model:res.groups,name:al_account_twizza.group_account_reader
+msgid "Reader"
+msgstr "Lecteur"
+
+#. module: al_account_twizza
+#: model:ir.actions.act_window,name:al_account_twizza.action_move_in_refund_type_twiza
+msgid "Refund"
+msgstr "Remboursement"
+
+#. module: al_account_twizza
+#: model:ir.model,name:al_account_twizza.model_sale_order
+msgid "Sales Order"
+msgstr "Bon de commande"
+
+#. module: al_account_twizza
+#: code:addons/al_account_twizza/models/sale_order.py:0
+#, python-format
+msgid ""
+"Taking orders for the customer %s is locked, because of late payment, please"
+" regularize the situation and inform your accounting department."
+msgstr ""
+"La prise de commande pour le client %s est bloquée, pour cause de retard de "
+"paiement ; merci de régulariser sa situation et d'en informer votre service "
+"Comptabilité"
+
+#. module: al_account_twizza
+#: model:ir.model.fields,field_description:al_account_twizza.field_account_payment_term__user_ids
+msgid "Users"
+msgstr "Utilisateurs"
+
+#. module: al_account_twizza
+#: model:ir.ui.menu,name:al_account_twizza.menu_finance_statement_root
+msgid "statement"
+msgstr "Recouvrement"
+
+#. module: al_account_twizza
+#: model:res.groups,name:al_account_twizza.group_account_statement_manager
+msgid "statement Manager"
+msgstr "Recouvrement : Manager"
+
+#. module: al_account_twizza
+#: model:res.groups,name:al_account_twizza.group_account_statement_reader
+msgid "statement Reader"
+msgstr "Recouvrement : Lecteur"

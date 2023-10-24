@@ -1,0 +1,306 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* al_sale_twizza
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0+e-20221005\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-05-17 15:22+0000\n"
+"PO-Revision-Date: 2023-05-17 15:22+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: al_sale_twizza
+#: model:ir.model.fields,field_description:al_sale_twizza.field_crm_team__analytic_account_id
+msgid "Analytic Account"
+msgstr "Compte analytique"
+
+#. module: al_sale_twizza
+#: model:ir.model.fields,field_description:al_sale_twizza.field_res_partner__area_id
+#: model:ir.model.fields,field_description:al_sale_twizza.field_res_partner_area__name
+#: model:ir.model.fields,field_description:al_sale_twizza.field_res_users__area_id
+msgid "Area"
+msgstr "Secteur"
+
+#. module: al_sale_twizza
+#: model:ir.actions.act_window,name:al_sale_twizza.al_partner_area_window_action
+#: model:ir.ui.menu,name:al_sale_twizza.al_menu_partner_area
+msgid "Areas"
+msgstr "Secteurs"
+
+#. module: al_sale_twizza
+#: model:ir.model.fields,field_description:al_sale_twizza.field_payment_mode__bank_acocunt
+msgid "Bank Account"
+msgstr "Compte Bancaire"
+
+#. module: al_sale_twizza
+#: model:ir.model,name:al_sale_twizza.model_res_partner
+msgid "Contact"
+msgstr ""
+
+#. module: al_sale_twizza
+#: model:ir.model.fields,field_description:al_sale_twizza.field_sale_order_line__purchase_price
+msgid "Cost"
+msgstr "Coût"
+
+#. module: al_sale_twizza
+#: model:res.groups,name:al_sale_twizza.group_create_invoices_from_sales
+msgid "Create invoices from sales"
+msgstr "Création de factures depuis les ventes"
+
+#. module: al_sale_twizza
+#: model:ir.model.fields,field_description:al_sale_twizza.field_delivery_mode__create_uid
+#: model:ir.model.fields,field_description:al_sale_twizza.field_payment_mode__create_uid
+#: model:ir.model.fields,field_description:al_sale_twizza.field_res_partner_area__create_uid
+#: model:ir.model.fields,field_description:al_sale_twizza.field_res_partner_type__create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: al_sale_twizza
+#: model:ir.model.fields,field_description:al_sale_twizza.field_delivery_mode__create_date
+#: model:ir.model.fields,field_description:al_sale_twizza.field_payment_mode__create_date
+#: model:ir.model.fields,field_description:al_sale_twizza.field_res_partner_area__create_date
+#: model:ir.model.fields,field_description:al_sale_twizza.field_res_partner_type__create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: al_sale_twizza
+#: model:ir.model.fields,field_description:al_sale_twizza.field_sale_order__days_to_confirm
+msgid "Days to confirm"
+msgstr "Jours pour confirmer"
+
+#. module: al_sale_twizza
+#: model:ir.model.fields,field_description:al_sale_twizza.field_sale_order__days_to_invoice
+msgid "Days to invoice"
+msgstr "Jours pour facturer"
+
+#. module: al_sale_twizza
+#: model:ir.actions.act_window,name:al_sale_twizza.al_delivery_mode_window_action
+#: model:ir.model,name:al_sale_twizza.model_delivery_mode
+#: model:ir.model.fields,field_description:al_sale_twizza.field_res_partner__delivery_mode_id
+#: model:ir.model.fields,field_description:al_sale_twizza.field_res_users__delivery_mode_id
+#: model:ir.model.fields,field_description:al_sale_twizza.field_sale_order__delivery_mode_id
+msgid "Delivery Mode"
+msgstr "Mode de Livraison"
+
+#. module: al_sale_twizza
+#: model:ir.ui.menu,name:al_sale_twizza.al_menu_delivery_mode
+msgid "Delivery Modes"
+msgstr "Modes de livraison"
+
+#. module: al_sale_twizza
+#: model:ir.model.fields,field_description:al_sale_twizza.field_res_partner_area__description
+msgid "Description"
+msgstr ""
+
+#. module: al_sale_twizza
+#: model:res.groups,name:al_sale_twizza.group_direction_twizza_med
+msgid "Direction Twizza MED"
+msgstr ""
+
+#. module: al_sale_twizza
+#: model:ir.model.fields,field_description:al_sale_twizza.field_delivery_mode__display_name
+#: model:ir.model.fields,field_description:al_sale_twizza.field_payment_mode__display_name
+#: model:ir.model.fields,field_description:al_sale_twizza.field_res_partner_area__display_name
+#: model:ir.model.fields,field_description:al_sale_twizza.field_res_partner_type__display_name
+msgid "Display Name"
+msgstr "Afficher Nom"
+
+#. module: al_sale_twizza
+#: model:ir.model.fields,field_description:al_sale_twizza.field_res_partner__home_consumption
+#: model:ir.model.fields,field_description:al_sale_twizza.field_res_users__home_consumption
+msgid "Home Consumption"
+msgstr "Consommation à domicile"
+
+#. module: al_sale_twizza
+#: model:ir.model.fields,field_description:al_sale_twizza.field_delivery_mode__id
+#: model:ir.model.fields,field_description:al_sale_twizza.field_payment_mode__id
+#: model:ir.model.fields,field_description:al_sale_twizza.field_res_partner_area__id
+#: model:ir.model.fields,field_description:al_sale_twizza.field_res_partner_type__id
+msgid "ID"
+msgstr ""
+
+#. module: al_sale_twizza
+#: model:ir.model.fields,field_description:al_sale_twizza.field_delivery_mode____last_update
+#: model:ir.model.fields,field_description:al_sale_twizza.field_payment_mode____last_update
+#: model:ir.model.fields,field_description:al_sale_twizza.field_res_partner_area____last_update
+#: model:ir.model.fields,field_description:al_sale_twizza.field_res_partner_type____last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: al_sale_twizza
+#: model:ir.model.fields,field_description:al_sale_twizza.field_delivery_mode__write_uid
+#: model:ir.model.fields,field_description:al_sale_twizza.field_payment_mode__write_uid
+#: model:ir.model.fields,field_description:al_sale_twizza.field_res_partner_area__write_uid
+#: model:ir.model.fields,field_description:al_sale_twizza.field_res_partner_type__write_uid
+msgid "Last Updated by"
+msgstr "Dernière mise à jour par"
+
+#. module: al_sale_twizza
+#: model:ir.model.fields,field_description:al_sale_twizza.field_delivery_mode__write_date
+#: model:ir.model.fields,field_description:al_sale_twizza.field_payment_mode__write_date
+#: model:ir.model.fields,field_description:al_sale_twizza.field_res_partner_area__write_date
+#: model:ir.model.fields,field_description:al_sale_twizza.field_res_partner_type__write_date
+msgid "Last Updated on"
+msgstr "Dernière mise à jour le"
+
+#. module: al_sale_twizza
+#: model:ir.model.fields,field_description:al_sale_twizza.field_sale_order_line__margin
+msgid "Margin"
+msgstr "Marge"
+
+#. module: al_sale_twizza
+#: model:ir.model.fields,field_description:al_sale_twizza.field_sale_order_line__margin_invoiced
+msgid "Margin Invoiced"
+msgstr "Marge Facturée"
+
+#. module: al_sale_twizza
+#: model:ir.model.fields,field_description:al_sale_twizza.field_sale_order__margin_rate
+msgid "Margin Rate"
+msgstr "Taux de marge"
+
+#. module: al_sale_twizza
+#: model:ir.model.fields,field_description:al_sale_twizza.field_delivery_mode__name
+#: model:ir.model.fields,field_description:al_sale_twizza.field_payment_mode__name
+#: model:ir.model.fields,field_description:al_sale_twizza.field_res_partner_type__name
+msgid "Name"
+msgstr "Nom"
+
+#. module: al_sale_twizza
+#: model:ir.model.fields,field_description:al_sale_twizza.field_sale_order__margin_net
+#: model:ir.model.fields,field_description:al_sale_twizza.field_sale_order_line__margin_net
+msgid "Net Margin"
+msgstr "Marge ap TSP"
+
+#. module: al_sale_twizza
+#: model:ir.model.fields,field_description:al_sale_twizza.field_sale_order__margin_rate_net
+msgid "Net Margin Rate"
+msgstr "Taux de Marge ap TSP"
+
+#. module: al_sale_twizza
+#: model:ir.model.fields,field_description:al_sale_twizza.field_sale_order_line__tarif_unit
+#: model_terms:ir.ui.view,arch_db:al_sale_twizza.report_saleorder_document
+msgid "Net Price Unit (unit)"
+msgstr "P.U. Net (Pièce)"
+
+#. module: al_sale_twizza
+#: model:ir.model.fields,field_description:al_sale_twizza.field_sale_order_line__tarif_uom
+#: model_terms:ir.ui.view,arch_db:al_sale_twizza.report_saleorder_document
+msgid "Net Price Unit (uom)"
+msgstr "P.U. Net (UDM)"
+
+#. module: al_sale_twizza
+#: model:ir.model.fields,field_description:al_sale_twizza.field_res_partner__out_home_consumption
+#: model:ir.model.fields,field_description:al_sale_twizza.field_res_users__out_home_consumption
+msgid "Out-Of-Home Consumption"
+msgstr "Restauration hors domicile (RHD)"
+
+#. module: al_sale_twizza
+#: model:ir.model,name:al_sale_twizza.model_res_partner_area
+msgid "Partner Area"
+msgstr "Secteur"
+
+#. module: al_sale_twizza
+#: model:ir.actions.act_window,name:al_sale_twizza.al_partner_type_window_action
+#: model:ir.model,name:al_sale_twizza.model_res_partner_type
+#: model:ir.model.fields,field_description:al_sale_twizza.field_res_partner__partner_type_id
+#: model:ir.model.fields,field_description:al_sale_twizza.field_res_users__partner_type_id
+#: model:ir.ui.menu,name:al_sale_twizza.al_menu_partner_type
+msgid "Partner Type"
+msgstr "Type de partenaire"
+
+#. module: al_sale_twizza
+#: model:ir.actions.act_window,name:al_sale_twizza.al_payment_mode_window_action
+#: model:ir.model,name:al_sale_twizza.model_payment_mode
+#: model:ir.model.fields,field_description:al_sale_twizza.field_res_partner__payment_mode_id
+#: model:ir.model.fields,field_description:al_sale_twizza.field_res_users__payment_mode_id
+#: model:ir.model.fields,field_description:al_sale_twizza.field_sale_order__payment_mode_id
+msgid "Payment Mode"
+msgstr "Mode de Paiement"
+
+#. module: al_sale_twizza
+#: model:ir.ui.menu,name:al_sale_twizza.al_menu_payment_mode
+msgid "Payment Modes"
+msgstr "Modes de paiement"
+
+#. module: al_sale_twizza
+#: model:ir.model.fields,field_description:al_sale_twizza.field_sale_order_line__product_category_id
+msgid "Product Category"
+msgstr "Catégorie d'article"
+
+#. module: al_sale_twizza
+#: model:res.groups,name:al_sale_twizza.group_sale_reader
+msgid "Reader"
+msgstr "Lecteur"
+
+#. module: al_sale_twizza
+#: model:res.groups,name:al_sale_twizza.group_access_to_products_from_sales
+msgid "Sales : Access to products"
+msgstr "Ventes : Accès aux articles"
+
+#. module: al_sale_twizza
+#: model:res.groups,name:al_sale_twizza.group_sale_discount_access
+msgid "Sales : Discount Access"
+msgstr "Ventes : Modification Remise"
+
+#. module: al_sale_twizza
+#: model:res.groups,name:al_sale_twizza.group_sale_margin_access
+msgid "Sales : Margin Access"
+msgstr "Ventes : Accès à la marge"
+
+#. module: al_sale_twizza
+#: model:res.groups,name:al_sale_twizza.group_sale_unit_price_access
+msgid "Sales : Unit Price Access"
+msgstr "Ventes : Modification P.U."
+
+#. module: al_sale_twizza
+#: model:ir.model,name:al_sale_twizza.model_sale_order
+msgid "Sales Order"
+msgstr "Bon de commande"
+
+#. module: al_sale_twizza
+#: model:ir.model,name:al_sale_twizza.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Ligne de bons de commande"
+
+#. module: al_sale_twizza
+#: model:ir.model,name:al_sale_twizza.model_crm_team
+msgid "Sales Team"
+msgstr "Équipe commerciale"
+
+#. module: al_sale_twizza
+#: model:ir.model.fields,help:al_sale_twizza.field_sale_order_line__product_category_id
+msgid "Select category for the current product"
+msgstr "Sélectionnez la catégorie de l'article actuel"
+
+#. module: al_sale_twizza
+#: model:ir.model,name:al_sale_twizza.model_delivery_carrier
+msgid "Shipping Methods"
+msgstr "Méthodes d'expédition"
+
+#. module: al_sale_twizza
+#: model:ir.model.fields,help:al_sale_twizza.field_crm_team__analytic_account_id
+msgid "The analytic account to use by default in a sales order."
+msgstr ""
+"Le compte analytique à utiliser par défaut dans les commandes de vente."
+
+#. module: al_sale_twizza
+#: model:ir.model.constraint,message:al_sale_twizza.constraint_res_partner_area_unique_name
+msgid "The name you're trying to use for this area exists already."
+msgstr "Le nom que vous essayez d'utiliser pour ce secteur existe déjà."
+
+#. module: al_sale_twizza
+#: model:ir.model.fields,field_description:al_sale_twizza.field_sale_order_line__total_purchase_price
+msgid "Total cost"
+msgstr "Coût Total"
+
+#. module: al_sale_twizza
+#: code:addons/al_sale_twizza/models/sale.py:0
+#, python-format
+msgid "You can't cancel a totally invoiced sale order."
+msgstr "Vous ne pouvez pas annuler une commande totalement facturée."

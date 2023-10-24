@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Inherit Form View to Modify it -->
+    <record id="al_view_move_form_inherit_twizza" model="ir.ui.view">
+        <field name="name">al.view.move.form.inherit.twizza</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <field name="invoice_date" position="after">
+                <field name="payment_mode_id" options="{'no_open':True}"/>
+            </field>
+            <!--     hide access to accounting data from invoice       -->
+            <xpath expr="//field[@name='invoice_payment_term_id']" position="attributes">
+                <attribute name="options">{'no_open': True, 'no_create': True}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='invoice_line_ids']/form/sheet/group/field[@name='account_id']" position="attributes">
+                <attribute name="options">{'no_open': True, 'no_create': True}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='tax_ids']" position="before">
+                <field name="tarif_uom" widget="monetary" optional="hide"/>
+                <field name="tarif_unit" widget="monetary" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

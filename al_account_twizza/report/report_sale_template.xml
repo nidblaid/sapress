@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_saleorder_document" inherit_id="sale.report_saleorder_document">
+
+        <p t-field="doc.note" position="before">
+            <center t-if="env.context.get('proforma', False) or is_pro_forma">
+                <p t-if="doc.payment_mode_id.bank_acocunt">
+                    <b t-field="doc.payment_mode_id.bank_acocunt"/>
+                </p>
+                <p t-else="">
+                    <b>
+                        ATTENTION - Nos coordonnées bancaires ont changé :<br/>
+                        Nouvel IBAN FR76 3000 4025 2000 0101 6682 983 - BIC BNPAFRPPXXX
+                    </b>
+                </p>
+            </center>
+        </p>
+
+    </template>
+</odoo>

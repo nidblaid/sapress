@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!--    send databse to server through FTP    -->
+        <record id="ftp_database_sync_cron_job" model="ir.cron">
+            <field name="name">FTP Database Sync</field>
+            <field name="model_id" ref="base.model_res_config_settings"/>
+            <field name="state">code</field>
+            <field name="code">model._ftp_sync_database()</field>
+            <field name='interval_number'>1</field>
+            <field name='interval_type'>days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False" />
+        </record>
+
+    </data>
+</odoo>

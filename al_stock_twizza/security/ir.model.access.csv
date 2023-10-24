@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_account_account_tag_by_stock_user,account.account.tag stock.user,account.model_account_account_tag,stock.group_stock_user,1,0,0,0
+
+access_stock_warehouse_by_stock_reader,stock.warehouse stock_reader,stock.model_stock_warehouse,group_stock_reader,1,0,0,0
+access_stock_picking_by_stock_reader,stock.picking stock_reader,stock.model_stock_picking,group_stock_reader,1,0,0,0
+access_stock_move_by_stock_reader,stock.move stock_reader,stock.model_stock_move,group_stock_reader,1,0,0,0
+access_stock_scrap_by_stock_reader,stock.scrap stock_reader,stock.model_stock_scrap,group_stock_reader,1,0,0,0
+access_stock_production_lot_by_stock_reader,stock.production.lot stock_reader,stock.model_stock_production_lot,group_stock_reader,1,0,0,0

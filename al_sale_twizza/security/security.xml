@@ -1,0 +1,50 @@
+<?xml version="1.0" ?>
+<odoo>
+    <data>
+
+        <!--   Sales : reader on Sales    -->
+        <record id="group_sale_reader" model="res.groups">
+            <field name="name">Reader</field>
+            <field name="category_id" ref="base.module_category_sales_sales"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="sales_team.group_sale_salesman" model="res.groups">
+            <field name="implied_ids" eval="[(6,0, [ref('group_sale_reader')])]"/>
+        </record>
+
+        <!--    Sales : Create Invoices    -->
+        <record id="group_create_invoices_from_sales" model="res.groups">
+            <field name="name">Create invoices from sales</field>
+            <field name="category_id" ref="base.module_category_usability"/>
+        </record>
+        <!--    sales : access to products    -->
+        <record id="group_access_to_products_from_sales" model="res.groups">
+            <field name="name">Sales : Access to products</field>
+            <field name="category_id" ref="base.module_category_usability"/>
+        </record>
+
+        <!--    group : access to margin rate and margin    -->
+        <record id="group_sale_margin_access" model="res.groups">
+            <field name="name">Sales : Margin Access</field>
+            <field name="category_id" ref="base.module_category_usability"/>
+        </record>
+        <!--    group : access to unit price in sales   -->
+        <record id="group_sale_unit_price_access" model="res.groups">
+            <field name="name">Sales : Unit Price Access</field>
+            <field name="category_id" ref="base.module_category_usability"/>
+        </record>
+        <!--    group : access to discount on sales    -->
+        <record id="group_sale_discount_access" model="res.groups">
+            <field name="name">Sales : Discount Access</field>
+            <field name="category_id" ref="base.module_category_usability"/>
+        </record>
+
+        <!--    Extra group for twizza MED    -->
+        <record id="group_direction_twizza_med" model="res.groups">
+            <field name="name">Direction Twizza MED</field>
+            <field name="category_id" ref="base.module_category_usability"/>
+            <field name="implied_ids" eval="[(4, ref('account.group_account_invoice'))]"/>
+        </record>
+
+    </data>
+</odoo>

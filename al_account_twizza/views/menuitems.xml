@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_view_statements" model="ir.actions.act_window">
+        <field name="name">Follow-up Reports</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="account_followup.customer_statements_search_view"/>
+        <field name="view_ids" eval="[(5, 0, 0),
+        (0, 0, {'view_mode': 'tree', 'view_id': ref('account_followup.customer_statements_tree_view')}),
+        (0, 0, {'view_mode': 'form', 'view_id': ref('account_followup.customer_statements_form_view')})]"/>
+        <field name="domain">[
+            '&amp;',
+            '|',
+            ('parent_id', '=', False),
+            ('is_company', '=', True),
+            ('user_id', '=', uid)
+        ]</field>
+        <field name="context">{
+            'search_default_filter_in_need_of_action': 1,
+            'search_default_customer': 1,
+            'res_partner_search_mode': 'customer'
+        }</field>
+    </record>
+    <menuitem name="statement"
+              id="menu_finance_statement_root"
+              groups="al_account_twizza.group_account_statement_reader"
+              web_icon="account,static/description/icon.png"
+              action="action_view_statements"
+              sequence="41"/>
+
+    <!--  sales  -->
+    <record id="action_move_out_invoice_type_twizza" model="ir.actions.act_window">
+        <field name="name">Invoices</field>
+        <field name="res_model">account.move</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="view_id" ref="account.view_invoice_tree"/>
+        <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+        <field name="domain">[('move_type', '=', 'out_invoice')]</field>
+        <field name="context">{'default_type': 'out_invoice', 'create': 0, 'edit': 0}</field>
+    </record>
+    <menuitem name="Invoice"
+              id="menu_sales_invoice_action"
+              parent="sale.sale_order_menu"
+              action="action_move_out_invoice_type_twizza"
+              groups="al_account_twizza.group_account_invoice_adv,group_account_reader"
+              sequence="7"/>
+
+    <record id="action_move_out_refund_type_twizza" model="ir.actions.act_window">
+        <field name="name">Credit Notes</field>
+        <field name="res_model">account.move</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="view_id" ref="account.view_invoice_tree"/>
+        <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+        <field name="domain">[('move_type', '=', 'out_refund')]</field>
+        <field name="context">{'default_type': 'out_refund', 'create': 0, 'edit': 0}</field>
+    </record>
+    <menuitem name="Credit Notes"
+              id="menu_sales_credit_note_action"
+              parent="sale.sale_order_menu"
+              action="action_move_out_refund_type_twizza"
+              groups="al_account_twizza.group_account_invoice_adv,group_account_reader"
+              sequence="8"/>
+
+
+    <!--  purchase  -->
+    <record id="action_move_in_invoice_type_twizza" model="ir.actions.act_window">
+        <field name="name">Bills</field>
+        <field name="res_model">account.move</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="view_id" ref="account.view_invoice_tree"/>
+        <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+        <field name="domain">[('move_type', '=', 'in_invoice')]</field>
+        <field name="context">{'default_type': 'in_invoice', 'create': 0, 'edit': 0}</field>
+    </record>
+    <menuitem name="Invoice"
+              id="menu_purchase_invoice_action"
+              parent="purchase.menu_procurement_management"
+              action="action_move_in_invoice_type_twizza"
+              groups="purchase.group_purchase_manager,group_account_reader"
+              sequence="7"/>
+
+    <record id="action_move_in_refund_type_twiza" model="ir.actions.act_window">
+        <field name="name">Refund</field>
+        <field name="res_model">account.move</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="view_id" ref="account.view_invoice_tree"/>
+        <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+        <field name="domain">[(move_'type', '=', 'in_refund')]</field>
+        <field name="context">{'default_type': 'in_refund', 'create': 0, 'edit': 0}</field>
+    </record>
+    <menuitem name="Credit Notes"
+              id="menu_purchase_credit_note_action"
+              parent="purchase.menu_procurement_management"
+              action="action_move_in_refund_type_twiza"
+              groups="purchase.group_purchase_manager,group_account_reader"
+              sequence="8"/>
+
+    <record model="ir.ui.menu" id="account_accountant.menu_accounting">
+        <field name="groups_id" eval="[(6, 0,
+            [ref('account.group_account_user'), ref('account.group_account_manager'), ref('group_account_pre_account')]
+        )]"/>
+    </record>
+    <!-- Access financial Reports  -->
+    <record model="ir.ui.menu" id="account.menu_finance_reports">
+        <field name="groups_id" eval="[(4, ref('group_account_pre_account'))]"/>
+    </record>
+    <!--  Access intrastat report  -->
+    <record model="ir.ui.menu" id="account_intrastat.menu_action_account_report_intrastat">
+        <field name="groups_id" eval="[(6, 0, [ref('account.group_account_manager'), ref('group_account_pre_account')])]"/>
+    </record>
+    <!--  Access Supplier payments  -->
+    <record model="ir.ui.menu" id="account.menu_action_account_payments_payable">
+        <field name="groups_id" eval="[(4, ref('al_sale_twizza.group_direction_twizza_med'))]"/>
+    </record>
+
+</odoo>

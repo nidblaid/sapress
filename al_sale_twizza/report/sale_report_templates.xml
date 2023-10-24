@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_saleorder_document" inherit_id="sale.report_saleorder_document">
+
+        <xpath expr="///th[@name='th_taxes']" position="before">
+            <th name="th_tarif_uom" class="text-center">Net Price Unit (uom)</th>
+            <th name="th_tarif_unit" class="text-center">Net Price Unit (unit)</th>
+        </xpath>
+
+        <xpath expr="//td[@name='td_taxes']" position="before">
+            <td name="td_tarif_uom" class="text-right">
+                <span t-field="line.tarif_uom"/>
+            </td>
+            <td name="td_tarif_unit" class="text-right">
+                <span t-field="line.tarif_unit"/>
+            </td>
+        </xpath>
+
+        <!--    center stuff    -->
+        <xpath expr="//th[@name='th_description']" position="attributes">
+            <attribute name="class">text-center</attribute>
+        </xpath>
+        <xpath expr="//th[@name='th_quantity']" position="attributes">
+            <attribute name="class">text-center</attribute>
+        </xpath>
+        <xpath expr="//th[@name='th_priceunit']" position="attributes">
+            <attribute name="class">text-center</attribute>
+        </xpath>
+        <xpath expr="//th[@name='th_discount']" position="attributes">
+            <attribute name="class">text-center</attribute>
+        </xpath>
+        <xpath expr="//th[@name='th_taxes']" position="attributes">
+            <attribute name="class">text-center</attribute>
+        </xpath>
+        <xpath expr="//th[@name='th_subtotal']" position="attributes">
+            <attribute name="class">text-center</attribute>
+        </xpath>
+
+    </template>
+
+</odoo>

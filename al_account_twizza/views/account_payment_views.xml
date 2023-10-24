@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--  account.payment.term : Form view  -->
+    <record id="view_payment_term_form_inherit_twizza" model="ir.ui.view">
+        <field name="name">view.payment.term.form.inherit.twizza</field>
+        <field name="model">account.payment.term</field>
+        <field name="inherit_id" ref="account.view_payment_term_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//group/group" position="after">
+                <group>
+                    <field name="user_ids" widget="many2many_tags" options="{'no_create': True, 'no_open': True}"/>
+                    <field name="max_payment_delay"/>
+                </group>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!--  account.payment.term : Tree views  -->
+    <record id="view_payment_term_tree_inherit_twizza" model="ir.ui.view">
+        <field name="name">view.payment.term.tree.inherit.twizza</field>
+        <field name="model">account.payment.term</field>
+        <field name="inherit_id" ref="account.view_payment_term_tree"/>
+        <field name="arch" type="xml">
+
+            <field name="name" position="after">
+                <field name="user_ids" widget="many2many_tags"/>
+            </field>
+
+        </field>
+    </record>
+
+</odoo>

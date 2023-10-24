@@ -1,0 +1,98 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* al_server_twizza
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0+e-20220307\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-14 13:00+0000\n"
+"PO-Revision-Date: 2022-03-14 13:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: al_server_twizza
+#: model:ir.model,name:al_server_twizza.model_res_config_settings
+msgid "Config Settings"
+msgstr "Paramètres de config"
+
+#. module: al_server_twizza
+#: model_terms:ir.ui.view,arch_db:al_server_twizza.res_config_settings_view_form_twizza
+msgid "FTP Credentials"
+msgstr "Identifiants FTP"
+
+#. module: al_server_twizza
+#: model_terms:ir.ui.view,arch_db:al_server_twizza.res_config_settings_view_form_twizza
+msgid "FTP Database"
+msgstr "Base de donnée"
+
+#. module: al_server_twizza
+#: model:ir.actions.server,name:al_server_twizza.ftp_database_sync_cron_job_ir_actions_server
+#: model:ir.cron,cron_name:al_server_twizza.ftp_database_sync_cron_job
+#: model:ir.cron,name:al_server_twizza.ftp_database_sync_cron_job
+msgid "FTP Database Sync"
+msgstr ""
+
+#. module: al_server_twizza
+#: model:ir.model.fields,field_description:al_server_twizza.field_res_config_settings__ftp_host
+msgid "FTP HOST"
+msgstr "Serveur Hôte"
+
+#. module: al_server_twizza
+#: model:ir.model.fields,field_description:al_server_twizza.field_res_config_settings__ftp_password
+msgid "FTP PASSWORD"
+msgstr "Mot de passe"
+
+#. module: al_server_twizza
+#: model:ir.model.fields,field_description:al_server_twizza.field_res_config_settings__ftp_port
+msgid "FTP PORT"
+msgstr "Port"
+
+#. module: al_server_twizza
+#: model:ir.model.fields,field_description:al_server_twizza.field_res_config_settings__ftp_user
+msgid "FTP USER"
+msgstr "Utilisateur"
+
+#. module: al_server_twizza
+#: model_terms:ir.ui.view,arch_db:al_server_twizza.res_config_settings_view_form_twizza
+msgid "Host"
+msgstr "Hôte"
+
+#. module: al_server_twizza
+#: model:ir.model.fields,field_description:al_server_twizza.field_res_config_settings__local_path
+msgid "LOCAL PATH"
+msgstr "Chemin local"
+
+#. module: al_server_twizza
+#: model_terms:ir.ui.view,arch_db:al_server_twizza.res_config_settings_view_form_twizza
+msgid "Local Path"
+msgstr "Chemin local"
+
+#. module: al_server_twizza
+#: model_terms:ir.ui.view,arch_db:al_server_twizza.res_config_settings_view_form_twizza
+msgid "Password"
+msgstr "Mot de passe"
+
+#. module: al_server_twizza
+#: model_terms:ir.ui.view,arch_db:al_server_twizza.res_config_settings_view_form_twizza
+msgid "Port"
+msgstr "Port"
+
+#. module: al_server_twizza
+#: model:ir.model.fields,field_description:al_server_twizza.field_res_config_settings__remote_path
+msgid "REMOTE PATH"
+msgstr "Chemin distant"
+
+#. module: al_server_twizza
+#: model_terms:ir.ui.view,arch_db:al_server_twizza.res_config_settings_view_form_twizza
+msgid "Remote Path"
+msgstr "Chemin distant"
+
+#. module: al_server_twizza
+#: model_terms:ir.ui.view,arch_db:al_server_twizza.res_config_settings_view_form_twizza
+msgid "User"
+msgstr "Utilisateur"

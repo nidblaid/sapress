@@ -1,0 +1,23 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_delivery_mode_by_base_user,delivery.mode base.user,al_sale_twizza.model_delivery_mode,base.group_user,1,0,0,0
+access_delivery_mode_by_sale_manager,delivery.mode sale.manager,al_sale_twizza.model_delivery_mode,sales_team.group_sale_manager,1,1,1,1
+
+access_payment_mode_by_base_user,payment.mode base.user,al_sale_twizza.model_payment_mode,base.group_user,1,0,0,0
+access_payment_mode_by_sale_manager,payment.mode sale.manager,al_sale_twizza.model_payment_mode,sales_team.group_sale_manager,1,1,1,1
+
+access_partner_type_by_base_user,res.partner.type base.user,al_sale_twizza.model_res_partner_type,base.group_user,1,0,0,0
+access_partner_type_by_sale_manager,res.partner.type sale.manager,al_sale_twizza.model_res_partner_type,sales_team.group_sale_manager,1,1,1,1
+
+access_partner_area_by_base_user,res.partner.area base.user,al_sale_twizza.model_res_partner_area,base.group_user,1,0,0,0
+access_partner_area_by_account_manager,res.partner.area account.manager,al_sale_twizza.model_res_partner_area,account.group_account_manager,1,1,1,1
+
+access_sale_order_by_sale_reader,sale.order sale.reader,sale.model_sale_order,group_sale_reader,1,0,0,0
+access_sale_order_line_by_sale_reader,sale.order.line sale.reader,sale.model_sale_order_line,group_sale_reader,1,0,0,0
+access_product.attribute.custom.value_by_sale_reader,product.attribute.custom.value sale.reader,sale.model_product_attribute_custom_value,group_sale_reader,1,0,0,0
+
+access_stock_picking_by_sale_reader,stock.picking sale.reader,stock.model_stock_picking,group_sale_reader,1,0,0,0
+access_stock_move_by_sale_reader,stock.move sale.reader,stock.model_stock_move,group_sale_reader,1,0,0,0
+access_stock_warehouse_by_sale_reader,stock.warehouse sale.reader,stock.model_stock_warehouse,group_sale_reader,1,0,0,0
+
+

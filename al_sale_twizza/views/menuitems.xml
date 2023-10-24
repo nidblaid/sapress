@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="al_menu_delivery_mode"
+              name="Delivery Modes"
+              parent="contacts.res_partner_menu_config"
+              action="al_sale_twizza.al_delivery_mode_window_action"
+              groups="sales_team.group_sale_manager"
+              sequence="7"/>
+
+    <menuitem id="al_menu_payment_mode"
+              name="Payment Modes"
+              parent="contacts.res_partner_menu_config"
+              action="al_sale_twizza.al_payment_mode_window_action"
+              groups="sales_team.group_sale_manager"
+              sequence="8"/>
+
+    <menuitem id="al_menu_partner_type"
+              name="Partner Type"
+              parent="contacts.res_partner_menu_config"
+              action="al_sale_twizza.al_partner_type_window_action"
+              groups="sales_team.group_sale_manager"
+              sequence="8"/>
+
+    <menuitem id="al_menu_partner_area"
+              name="Areas"
+              parent="contacts.res_partner_menu_config"
+              action="al_sale_twizza.al_partner_area_window_action"
+              groups="account.group_account_manager"
+              sequence="9"/>
+
+    <!--  inherit menuitems : Products  -->
+    <record id="sale.menu_product_template_action" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('al_sale_twizza.group_access_to_products_from_sales')])]"/>
+    </record>
+    <record id="sale.menu_products" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('al_sale_twizza.group_access_to_products_from_sales')])]"/>
+    </record>
+
+    <!--  inherit menuitems : Sales  -->
+    <record id="sale.menu_sale_quotations" model="ir.ui.menu">
+        <field name="groups_id" eval="[(4, ref('group_sale_reader'))]"/>
+    </record>
+    <record id="sale.menu_sale_order" model="ir.ui.menu">
+        <field name="groups_id" eval="[(4, ref('group_sale_reader'))]"/>
+    </record>
+    <record id="sale.res_partner_menu" model="ir.ui.menu">
+        <field name="groups_id" eval="[(4, ref('group_sale_reader'))]"/>
+    </record>
+
+</odoo>

@@ -1,0 +1,52 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* al_product_twizza
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0+e-20220425\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-05-11 15:15+0000\n"
+"PO-Revision-Date: 2022-05-11 15:15+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: al_product_twizza
+#: model:ir.model.fields,field_description:al_product_twizza.field_product_pricelist__company_id
+msgid "Company"
+msgstr "Société"
+
+#. module: al_product_twizza
+#: model:ir.model,name:al_product_twizza.model_product_pricelist
+msgid "Pricelist"
+msgstr "Liste de prix"
+
+#. module: al_product_twizza
+#: model:ir.model,name:al_product_twizza.model_product_product
+msgid "Product"
+msgstr "Article"
+
+#. module: al_product_twizza
+#: model:ir.model,name:al_product_twizza.model_product_template
+msgid "Product Template"
+msgstr "Modèle d'article"
+
+#. module: al_product_twizza
+#: model:res.groups,name:al_product_twizza.group_product_admin
+msgid "Products : Administration"
+msgstr "Articles : Administration"
+
+#. module: al_product_twizza
+#: model:res.groups,name:al_product_twizza.group_product_cost_management
+msgid "Products : Cost Management"
+msgstr "Articles : Gestion des coûts"
+
+#. module: al_product_twizza
+#: model:ir.model.fields,field_description:al_product_twizza.field_product_product__unit_volume
+#: model:ir.model.fields,field_description:al_product_twizza.field_product_template__unit_volume
+msgid "Unit Volume"
+msgstr "Volume unitaire"

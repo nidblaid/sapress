@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!--   Account : reader on Account stuff    -->
+    <record id="group_purchase_reader" model="res.groups">
+        <field name="name">Reader</field>
+        <field name="category_id" ref="base.module_category_inventory_purchase"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+    <record id="purchase.group_purchase_user" model="res.groups">
+        <field name="implied_ids" eval="[(6,0, [ref('group_purchase_reader')])]"/>
+    </record>
+
+    <!--    group : access to unit price in purchases   -->
+    <record id="group_purchase_unit_price_access" model="res.groups">
+        <field name="name">Purchases : Unit Price Access</field>
+        <field name="category_id" ref="base.module_category_usability"/>
+    </record>
+
+</odoo>

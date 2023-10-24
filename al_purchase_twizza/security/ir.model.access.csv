@@ -1,0 +1,12 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+purchase.access_product_product_purchase_manager,product.product purchase_manager,product.model_product_product,purchase.group_purchase_manager,1,0,0,0
+purchase.access_product_template_purchase_manager,product.template purchase_manager,product.model_product_template,purchase.group_purchase_manager,1,0,0,0
+
+access_purchase_order_by_purchase_reader,purchase.order purchase_reader,purchase.model_purchase_order,group_purchase_reader,1,0,0,0
+access_purchase_order_line_by_purchase_reader,purchase.order.line purchase_reader,purchase.model_purchase_order_line,group_purchase_reader,1,0,0,0
+
+access_account_move_line_by_purchase_reader,account.move.line purchase_reader,purchase.model_account_move_line,group_purchase_reader,1,0,0,0
+
+access_stock_picking_by_purchase_reader,stock.picking purchase_reader,purchase_stock.model_stock_picking,group_purchase_reader,1,0,0,0
+access_stock_move_by_purchase_reader,stock.move purchase_reader,purchase_stock.model_stock_move,group_purchase_reader,1,0,0,0

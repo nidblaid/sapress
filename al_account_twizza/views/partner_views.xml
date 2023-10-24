@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="al_view_partner_property_form_inherit_twizza" model="ir.ui.view">
+        <field name="name">al.view.partner.property.form.inherit.twizza</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="account.view_partner_property_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='purchase']" position="inside">
+                <field name="default_intrastat_id" context="{
+                    'search_view_ref': 'account_intrastat.view_intrastat_code_restricted_type_search',
+                    'form_view_ref': 'account_intrastat.view_intrastat_code_restricted_type_form',
+                    'default_type': 'transaction'}"
+                />
+                <field name="default_incoterm_id" options="{'no_create': True}"/>
+                <field name="default_intrastat_transport_id" options="{'no_create': True}"/>
+            </xpath>
+            <xpath expr="//group[@name='accounting_entries']" position="attributes">
+                <attribute name="groups">al_account_twizza.group_account_invoice_adv</attribute>
+            </xpath>
+            <field name="property_payment_term_id" position="before">
+                <field name="allow_lock" widget="boolean_toggle" groups="al_account_twizza.group_account_lock_partners"
+                       attrs="{'invisible': ['|', ('is_company', '=', False), ('type', 'in', ['delivery', 'other', 'private'])]}"/>
+                <field name="lock_on_sales" groups="al_account_twizza.group_account_lock_partners"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

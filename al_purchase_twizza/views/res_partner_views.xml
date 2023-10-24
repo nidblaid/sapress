@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.actions.act_window" id="purchase.act_res_partner_2_supplier_invoices">
+        <field name="context">{
+            'search_default_partner_id': active_id,
+            'default_type': 'in_invoice',
+            'default_partner_id': active_id,
+            'create': 0
+        }</field>
+    </record>
+
+</odoo>

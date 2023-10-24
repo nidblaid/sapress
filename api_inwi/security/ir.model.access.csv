@@ -1,5 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_inwi_api_cron,access_inwi_api_cron,model_inwi_api_cron,,1,1,1,1
-access_partner_inwi_destination,access_partner_inwi_destination,model_partner_inwi_destination,,1,1,1,1
-access_ville_inwi_correspondence,access_ville_inwi_correspondencen,model_ville_inwi_correspondence,,1,1,1,1
-access_inwi_config_settings,access_inwi_config_settings,model_inwi_config_settings,,1,1,1,1
